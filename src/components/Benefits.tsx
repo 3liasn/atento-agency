@@ -3,31 +3,30 @@ import { SITE } from "@/content/site";
 
 export function Benefits() {
   return (
-    <section id="oferta" className="scroll-mt-24 py-16 md:py-24 bg-white">
+    <section id="oferta" className="scroll-mt-24 py-20 md:py-28 bg-surface">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-block rounded-full bg-rose-50 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-rose-800 mb-3 border border-rose-200">
-            Nuestra propuesta de valor
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
-            Diseñado exclusivamente para el flujo de una clínica médica
+          <p className="eyebrow mb-4">Propuesta</p>
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-foreground">
+            Diseñado para el flujo de una clínica
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-600">
-            No es un chatbot genérico con respuestas torpes. Es un protocolo clínico entrenado para informar con calidez y convertir consultas en pacientes reales en el sillón.
+          <p className="mt-4 text-base sm:text-lg text-muted">
+            No es un chatbot genérico. Es un protocolo entrenado para informar con calidez
+            y convertir consultas en pacientes en el sillón.
           </p>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {SITE.benefits.map((benefit, i) => (
             <div
               key={i}
-              className="flex flex-col rounded-2xl ring-1 ring-black/5 bg-white p-7 shadow-sm transition-all hover:border-rose-500/40 hover:shadow-md"
+              className="flex flex-col rounded-xl border border-border bg-surface-raised p-7 transition-colors hover:border-accent/35"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-rose-50 text-2xl mb-5 border border-rose-100">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-accent/30 bg-accent-muted text-accent text-xs font-semibold mb-5">
                 {benefit.icon}
               </div>
-              <h3 className="text-xl font-bold text-slate-900">{benefit.title}</h3>
-              <p className="mt-2.5 text-sm leading-relaxed text-slate-600">{benefit.desc}</p>
+              <h3 className="text-lg font-semibold text-foreground">{benefit.title}</h3>
+              <p className="mt-2.5 text-sm leading-relaxed text-muted">{benefit.desc}</p>
             </div>
           ))}
         </div>
