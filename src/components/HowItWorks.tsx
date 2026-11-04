@@ -3,10 +3,10 @@ import { SITE } from "@/content/site";
 
 export function HowItWorks() {
   return (
-    <section id="como-funciona" className="scroll-mt-24 py-16 md:py-24 bg-[#F7F8FB] border-t border-slate-200/70">
+    <section id="como-funciona" className="scroll-mt-24 py-16 md:py-24 bg-surface border-t border-slate-200/70">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-block rounded-full bg-teal-50 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-teal-800 mb-3 border border-teal-200">
+          <span className="inline-block rounded-full bg-rose-50 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-rose-800 mb-3 border border-rose-200">
             Paso a paso simple
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
@@ -24,8 +24,8 @@ export function HowItWorks() {
               className="rounded-2xl ring-1 ring-black/5 bg-white p-8 shadow-sm"
             >
               <div className="flex items-center justify-between mb-6">
-                <span className="text-3xl font-extrabold text-teal-700 tracking-tight">{step.step}</span>
-                <span className="h-8 w-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-800 text-xs font-bold">
+                <span className="text-3xl font-extrabold text-accent tracking-tight">{step.step}</span>
+                <span className="h-8 w-8 rounded-full bg-rose-50 flex items-center justify-center text-rose-800 text-xs font-bold">
                   ✓
                 </span>
               </div>
@@ -36,8 +36,8 @@ export function HowItWorks() {
         </div>
 
         {/* Integration Callout */}
-        <div className="mt-12 rounded-2xl border border-teal-200 bg-teal-50/50 p-6 text-center">
-          <p className="text-sm font-semibold text-teal-900">
+        <div className="mt-12 rounded-2xl border border-rose-200 bg-rose-50/50 p-6 text-center">
+          <p className="text-sm font-semibold text-rose-900">
             Compatible con tu flujo habitual: WhatsApp Business API oficial, Google Calendar, calendarios médicos y notificaciones a tu personal.
           </p>
         </div>

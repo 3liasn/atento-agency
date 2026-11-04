@@ -3,8 +3,8 @@ export const SITE = {
   tagline: "Tu recepción con IA, siempre atenta.",
   description:
     "Asistente con inteligencia artificial para clínicas dentales y de estética. Responde en segundos por WhatsApp y web 24/7, agenda citas reales y recupera pacientes sin cambiar tu agenda.",
-  whatsappNumber: "595981000000",
-  whatsappUrl: "https://wa.me/595981000000?text=Hola%20Atento%2C%20quiero%20informaci%C3%B3n%20para%20mi%20cl%C3%ADnica",
+  whatsappNumber: "886979516713",
+  whatsappUrl: "https://wa.me/886979516713?text=Hola%20Atento%2C%20quiero%20informaci%C3%B3n%20para%20mi%20cl%C3%ADnica",
   navLinks: [
     { label: "Oferta fundadores", href: "#fundadores" },
     { label: "Qué ofrecemos", href: "#oferta" },
@@ -177,7 +177,7 @@ export const SITE = {
       "Aviso de transparencia: Desde la clínica n.º 4 en adelante aplican los precios regulares de setup y mensualidad de cada plan sin bonificación.",
     cta: "Postular a 1 de los 3 cupos fundadores",
     ctaHref:
-      "https://wa.me/595981000000?text=Hola%20Atento%2C%20quiero%20uno%20de%20los%203%20cupos%20fundadores%20para%20mi%20cl%C3%ADnica",
+      "https://wa.me/886979516713?text=Hola%20Atento%2C%20quiero%20uno%20de%20los%203%20cupos%20fundadores%20para%20mi%20cl%C3%ADnica",
   },
   faqs: [
     {

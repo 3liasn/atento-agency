@@ -6,7 +6,7 @@ export function Faq() {
     <section id="faq" className="scroll-mt-24 py-16 md:py-24 bg-white border-t border-slate-200/70">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <span className="inline-block rounded-full bg-teal-100/70 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-teal-800 mb-3 border border-teal-200">
+          <span className="inline-block rounded-full bg-rose-50 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-rose-800 mb-3 border border-rose-200">
             Dudas resueltas
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
@@ -25,7 +25,7 @@ export function Faq() {
             >
               <summary className="flex cursor-pointer items-center justify-between gap-4 font-bold text-slate-900 select-none">
                 <span className="text-base sm:text-lg">{faq.q}</span>
-                <span className="shrink-0 transition-transform duration-200 group-open:rotate-180 text-teal-600">
+                <span className="shrink-0 transition-transform duration-200 group-open:rotate-180 text-accent">
                   <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
@@ -48,7 +48,7 @@ export function Faq() {
               href={SITE.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-bold text-teal-700 hover:text-teal-900 underline underline-offset-4"
+              className="font-bold text-accent hover:text-rose-900 underline underline-offset-4"
             >
               Consúltanos directo por WhatsApp
             </a>

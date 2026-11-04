@@ -3,7 +3,7 @@ import { SITE } from "@/content/site";
 
 export function Problem() {
   return (
-    <section className="py-16 md:py-24 bg-[#F7F8FB] border-y border-slate-200/70">
+    <section className="py-16 md:py-24 bg-surface border-y border-slate-200/70">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
@@ -18,7 +18,7 @@ export function Problem() {
           {SITE.problem.points.map((pt, i) => (
             <div
               key={i}
-              className="rounded-2xl ring-1 ring-black/5 bg-white shadow-sm p-6 transition-all hover:border-teal-500/40"
+              className="rounded-2xl ring-1 ring-black/5 bg-white shadow-sm p-6 transition-all hover:border-rose-500/40"
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-100 text-rose-700 font-bold mb-4">
                 0{i + 1}

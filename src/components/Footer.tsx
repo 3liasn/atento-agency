@@ -31,27 +31,27 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#oferta" className="hover:text-teal-700 transition-colors">
+                <Link href="#oferta" className="hover:text-accent transition-colors">
                   Qué ofrecemos y Beneficios
                 </Link>
               </li>
               <li>
-                <Link href="#como-funciona" className="hover:text-teal-700 transition-colors">
+                <Link href="#como-funciona" className="hover:text-accent transition-colors">
                   Cómo funciona
                 </Link>
               </li>
               <li>
-                <Link href="#precios" className="hover:text-teal-700 transition-colors">
+                <Link href="#precios" className="hover:text-accent transition-colors">
                   Precios
                 </Link>
               </li>
               <li>
-                <Link href="#faq" className="hover:text-teal-700 transition-colors">
+                <Link href="#faq" className="hover:text-accent transition-colors">
                   Preguntas frecuentes
                 </Link>
               </li>
               <li>
-                <Link href="/demo" className="text-teal-600 font-semibold hover:text-teal-500 transition-colors">
+                <Link href="/demo" className="text-accent font-semibold hover:text-accent transition-colors">
                   Demo interactiva →
                 </Link>
               </li>
@@ -69,7 +69,7 @@ export function Footer() {
                   href={SITE.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-teal-600 hover:underline"
+                  className="text-accent hover:underline"
                 >
                   +{SITE.whatsappNumber}
                 </a>
