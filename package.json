@@ -7,7 +7,7 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --experimental-strip-types src/lib/chatBot.test.ts"
+    "test": "node --experimental-strip-types src/lib/chatBot.test.ts && node scripts/informe-meta-ads.test.mjs"
   },
   "dependencies": {
     "react": "19.1.0",

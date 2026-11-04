@@ -20,7 +20,7 @@ Idioma UI: **español**. 100% online.
   - Premium: setup $1.990 · $499/mes — multi-sede, reportes, integraciones, SLA.
 - Prueba social placeholder (3 testimonios ficticios claramente de demo).
 - FAQ (6–8 preguntas).
-- Contacto: botón WhatsApp (wa.me/595981000000 placeholder) + formulario placeholder (nombre, clínica, ciudad, WhatsApp; onSubmit previene default y muestra «Pronto te contactamos»).
+- Contacto: botón WhatsApp (wa.me/886979516713) + formulario placeholder (nombre, clínica, ciudad, WhatsApp; onSubmit previene default y muestra «Pronto te contactamos»).
 - Footer con marca y aviso «Proyecto piloto / demo».
 
 ## Demo (`/demo`)

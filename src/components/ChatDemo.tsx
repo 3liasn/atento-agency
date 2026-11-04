@@ -1,16 +1,48 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 import {
   ChatState,
   ChatMessage,
-  getInitialBotGreeting,
-  replyBot,
+  BotConfig,
+  ProspectoInput,
+  DEFAULT_CONFIG,
+  createClinicBot,
+  prospectoToConfig,
 } from "@/lib/chatBot";
 
-export function ChatDemo() {
+export interface ChatDemoProps {
+  config?: BotConfig;
+  prospecto?: ProspectoInput;
+  ficticio?: boolean;
+}
+
+function getClinicInitials(name: string, isCustom?: boolean): string {
+  if (!isCustom) return "CA";
+  const words = name
+    .trim()
+    .split(/\s+/)
+    .filter((w) => w.length > 0 && w.toLowerCase() !== "demo");
+  if (words.length >= 2) {
+    return (words[0][0] + words[1][0]).toUpperCase();
+  }
+  return name.slice(0, 2).toUpperCase() || "IA";
+}
+
+export function ChatDemo({ config, prospecto, ficticio }: ChatDemoProps = {}) {
+  const activeConfig = useMemo<BotConfig>(() => {
+    if (config) return config;
+    if (prospecto) return prospectoToConfig(prospecto);
+    return DEFAULT_CONFIG;
+  }, [config, prospecto]);
+
+  const bot = useMemo(() => createClinicBot(activeConfig), [activeConfig]);
+  const isFicticio = ficticio ?? activeConfig.ficticio;
+  const initials = getClinicInitials(activeConfig.clinicName, activeConfig.isCustomDemo);
+  const typingName = activeConfig.assistantName || activeConfig.clinicName;
+
   const [messages, setMessages] = useState<ChatMessage[]>(() => {
-    const greeting = getInitialBotGreeting();
+    const greeting = bot.getInitialBotGreeting();
     return greeting.messages.map((text, idx) => ({
       id: `bot-init-${idx}`,
       sender: "bot",
@@ -19,8 +51,8 @@ export function ChatDemo() {
     }));
   });
 
-  const [state, setState] = useState<ChatState>(() => getInitialBotGreeting().state);
-  const [quickReplies, setQuickReplies] = useState<string[]>(() => getInitialBotGreeting().quickReplies);
+  const [state, setState] = useState<ChatState>(() => bot.getInitialBotGreeting().state);
+  const [quickReplies, setQuickReplies] = useState<string[]>(() => bot.getInitialBotGreeting().quickReplies);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
@@ -51,13 +83,13 @@ export function ChatDemo() {
 
     // Simula una breve latencia de red/asistente humanoide de 450ms
     setTimeout(() => {
-      const response = replyBot(state, text);
+      const response = bot.replyBot(state, text);
       setState(response.state);
 
       const newBotMessages: ChatMessage[] = response.messages.map((botText, idx) => ({
         id: `bot-${Date.now()}-${idx}`,
         sender: "bot",
-        text: botText,
+        text,
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       }));
 
@@ -68,7 +100,7 @@ export function ChatDemo() {
   };
 
   const handleReset = () => {
-    const greeting = getInitialBotGreeting();
+    const greeting = bot.getInitialBotGreeting();
     setState(greeting.state);
     setQuickReplies(greeting.quickReplies);
     setMessages(
@@ -84,25 +116,35 @@ export function ChatDemo() {
     if (inputRef.current) inputRef.current.focus();
   };
 
+  const placeholderExample =
+    activeConfig.isCustomDemo && activeConfig.treatments.length > 0
+      ? `Escribe tu mensaje (ej. 'Quiero ${activeConfig.treatments[0].name.toLowerCase()}' o 'Hablar con humano')...`
+      : "Escribe tu mensaje (ej. 'Quiero blanqueamiento' o 'Hablar con humano')...";
+
   return (
     <div className="flex flex-col h-[650px] w-full max-w-2xl mx-auto rounded-3xl border border-slate-200/90 bg-white shadow-2xl overflow-hidden">
-      {/* Aurora Clinic Header */}
+      {/* Clinic Header */}
       <div className="bg-gradient-to-r from-teal-700 via-teal-800 to-slate-900 px-5 py-4 text-white flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-xs border border-white/20 text-white font-extrabold text-base shadow-sm">
-            <span>CA</span>
+            <span>{initials}</span>
             <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-400 ring-2 ring-teal-800" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h3 className="text-base font-bold text-white tracking-tight">Clínica Dental Aurora</h3>
+            <div className="flex flex-wrap items-center gap-2">
+              <h3 className="text-base font-bold text-white tracking-tight">{activeConfig.clinicName}</h3>
               <span className="rounded-full bg-teal-500/30 px-2 py-0.5 text-[10px] font-semibold text-teal-100 border border-teal-400/20">
-                Demo
+                Demo · IA
               </span>
+              {activeConfig.isCustomDemo && isFicticio && (
+                <span className="rounded-full bg-amber-500/30 px-2 py-0.5 text-[10px] font-semibold text-amber-100 border border-amber-400/30">
+                  datos ficticios
+                </span>
+              )}
             </div>
             <p className="text-xs text-teal-200 font-medium flex items-center gap-1.5 mt-0.5">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Asistente de recepción IA activo 24/7
+              Asistente de recepción IA activo 24/7{activeConfig.city ? ` · ${activeConfig.city}` : ""}
             </p>
           </div>
         </div>
@@ -159,7 +201,7 @@ export function ChatDemo() {
         {isTyping && (
           <div className="flex justify-start">
             <div className="rounded-2xl rounded-tl-none bg-white border border-slate-200/80 px-4 py-3 text-slate-500 shadow-xs flex items-center gap-2">
-              <span className="text-xs font-medium text-slate-600">Aurora está respondiendo</span>
+              <span className="text-xs font-medium text-slate-600">{typingName} está respondiendo</span>
               <span className="flex gap-1">
                 <span className="h-1.5 w-1.5 rounded-full bg-teal-600 animate-bounce [animation-delay:-0.3s]"></span>
                 <span className="h-1.5 w-1.5 rounded-full bg-teal-600 animate-bounce [animation-delay:-0.15s]"></span>
@@ -199,7 +241,7 @@ export function ChatDemo() {
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          placeholder="Escribe tu mensaje (ej. 'Quiero blanqueamiento' o 'Hablar con humano')..."
+          placeholder={placeholderExample}
           className="flex-1 rounded-xl border border-slate-300 px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20"
         />
         <button

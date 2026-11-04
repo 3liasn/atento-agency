@@ -29,6 +29,24 @@ export interface TreatmentInfo {
   description: string;
 }
 
+export interface BotConfig {
+  clinicName: string;
+  shortClinicName?: string;
+  city?: string;
+  treatments: TreatmentInfo[];
+  assistantName?: string;
+  doctorLine?: string;
+  isCustomDemo?: boolean;
+  ficticio?: boolean;
+}
+
+export interface ProspectoInput {
+  nombre: string;
+  ciudad: string;
+  servicios: string[];
+  ficticio?: boolean;
+}
+
 export const TREATMENTS: TreatmentInfo[] = [
   {
     id: "limpieza",
@@ -72,6 +90,16 @@ export const TREATMENTS: TreatmentInfo[] = [
   },
 ];
 
+export const DEFAULT_CONFIG: BotConfig = {
+  clinicName: "Clínica Dental Aurora",
+  shortClinicName: "Clínica Aurora",
+  treatments: TREATMENTS,
+  assistantName: "Aurora",
+  doctorLine: "con la Dra. Méndez en Clínica Aurora",
+  isCustomDemo: false,
+  ficticio: true,
+};
+
 export const AVAILABLE_SLOTS = [
   "Mañana a las 11:30 hs",
   "Mañana a las 16:00 hs",
@@ -84,6 +112,42 @@ export function normalizeText(text: string): string {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .trim();
+}
+
+export function prospectoToConfig(p: ProspectoInput): BotConfig {
+  const treatments: TreatmentInfo[] = p.servicios.map((srv, index) => {
+    const clean = srv.trim();
+    const normSrv = normalizeText(clean);
+    const slugId = normSrv.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || `servicio-${index + 1}`;
+    const displayName = clean.charAt(0).toUpperCase() + clean.slice(1);
+
+    // Extraer palabras específicas evitando colisiones genéricas (ej. "limpieza" suelta en "limpieza facial")
+    const specificWords = normSrv
+      .split(/\s+/)
+      .filter((w) => w.length > 3 && w !== "limpieza" && w !== "acido");
+
+    const keywords = Array.from(new Set([normSrv, ...specificWords]));
+
+    return {
+      id: slugId,
+      name: displayName,
+      keywords,
+      priceRange: "Precio a confirmar por la clínica (demo)",
+      duration: "A confirmar",
+      description: `Atención e información orientativa sobre ${clean} en ${p.nombre}${p.ciudad ? ` (${p.ciudad})` : ""}.`,
+    };
+  });
+
+  return {
+    clinicName: p.nombre,
+    shortClinicName: p.nombre,
+    city: p.ciudad,
+    treatments,
+    assistantName: p.nombre,
+    doctorLine: `con el equipo profesional en ${p.nombre}`,
+    isCustomDemo: true,
+    ficticio: Boolean(p.ficticio),
+  };
 }
 
 const STOP_WORDS = new Set([
@@ -130,6 +194,10 @@ const STOP_WORDS = new Set([
   "carillas",
   "botox",
   "estetica",
+  "facial",
+  "hialuronico",
+  "acido",
+  "laser",
 ]);
 
 function capitalizeWord(word: string, isFirst: boolean): string {
@@ -334,9 +402,9 @@ function detectHumanIntent(normalized: string): boolean {
   return triggers.some((t) => normalized.includes(t));
 }
 
-function matchTreatment(text: string): TreatmentInfo | undefined {
+function matchTreatmentFromList(text: string, treatments: TreatmentInfo[]): TreatmentInfo | undefined {
   const norm = normalizeText(text);
-  for (const t of TREATMENTS) {
+  for (const t of treatments) {
     if (norm.includes(normalizeText(t.name))) return t;
     for (const kw of t.keywords) {
       if (norm.includes(normalizeText(kw))) return t;
@@ -345,316 +413,331 @@ function matchTreatment(text: string): TreatmentInfo | undefined {
   return undefined;
 }
 
-export function getInitialBotGreeting(): { state: ChatState; messages: string[]; quickReplies: string[] } {
-  return {
-    state: { step: "init" },
-    messages: [
-      "¡Hola! 👋 Te damos la bienvenida a Clínica Dental Aurora.",
-      "Soy el asistente virtual inteligente de la clínica. ¿Cómo te llamas para poder dirigirme a ti?",
-    ],
-    quickReplies: ["Hola, me llamo Carlos", "Soy María", "Prefiero consultar un precio"],
-  };
-}
+export function createClinicBot(config: BotConfig = DEFAULT_CONFIG) {
+  const shortName = config.shortClinicName || config.clinicName;
+  const doctorLine = config.doctorLine ?? `con el equipo de ${shortName}`;
+  const treatmentQuickReplies = config.isCustomDemo
+    ? config.treatments.map((t) => t.name)
+    : [
+        "Limpieza dental",
+        "Blanqueamiento LED",
+        "Ortodoncia invisible",
+        "Implantes dentales",
+        "Valoración estética",
+      ];
 
-export function replyBot(currentState: ChatState, userInput: string): BotResponse {
-  const rawInput = (userInput || "").trim();
-  const norm = normalizeText(rawInput);
-
-  if (norm.length === 0) {
-    return {
-      state: currentState,
-      messages: ["Disculpa, no recibí ningún mensaje. ¿En qué te podemos ayudar hoy en Clínica Aurora?"],
-      quickReplies: ["Ver tratamientos", "Quiero agendar cita", "Hablar con un humano"],
-    };
-  }
-
-  // Si en cualquier punto piden un humano
-  if (detectHumanIntent(norm)) {
-    return {
-      state: { ...currentState, step: "human_handoff", needsHuman: true },
-      messages: [
-        "Por supuesto. Comprendo perfectamente que quieras atención personalizada con nuestro equipo clínico.",
-        "Por favor indícame tu número de WhatsApp o teléfono con código de área para que nuestra recepcionista te contacte en los próximos minutos.",
-      ],
-      quickReplies: ["Dejar mi número", "Volver al asistente automático"],
-    };
-  }
-
-  // Manejo por estado
-  switch (currentState.step) {
-    case "init": {
-      const name = extractPatientName(rawInput);
-      const matched = matchTreatment(rawInput);
-
-      if (matched) {
-        return {
-          state: {
-            ...currentState,
-            step: "show_pricing",
-            patientName: name,
-            treatment: matched.name,
-          },
-          messages: [
-            `¡Mucho gusto, ${name}! Encantado de saludarte.`,
-            `Respecto a ${matched.name}: ${matched.description}`,
-            `💰 Rango orientativo: ${matched.priceRange} (duración: ${matched.duration}).`,
-            "¿Te gustaría agendar una cita o valoración con nuestros especialistas?",
-          ],
-          quickReplies: ["Sí, agendar cita", "Ver otros tratamientos", "Hablar con recepcionista"],
-        };
-      }
-
+  function getInitialBotGreeting(): { state: ChatState; messages: string[]; quickReplies: string[] } {
+    if (config.isCustomDemo) {
+      const cityPart = config.city ? ` en ${config.city}` : "";
+      const servicesSummary = config.treatments.map((t) => t.name).join(", ");
+      const ficticioBadge = config.ficticio ? " (datos ficticios)" : "";
       return {
-        state: { ...currentState, step: "ask_treatment", patientName: name },
+        state: { step: "init" },
         messages: [
-          `¡Mucho gusto, ${name}! Un placer ayudarte hoy.`,
-          "¿Qué tratamiento o motivo de consulta tienes en mente?",
+          `DEMO: soy un asistente de IA, no una persona. Datos de ejemplo${ficticioBadge}.`,
+          `¡Hola! 👋 Te damos la bienvenida a ${config.clinicName}${cityPart}. Atendemos consultas sobre ${servicesSummary}. ¿Cómo te llamas para poder dirigirme a ti?`,
         ],
-        quickReplies: [
-          "Limpieza dental",
-          "Blanqueamiento LED",
-          "Ortodoncia invisible",
-          "Implantes dentales",
-          "Valoración estética",
-        ],
+        quickReplies: ["Hola, me llamo Carlos", "Soy María", "Prefiero consultar un precio"],
       };
     }
 
-    case "ask_treatment": {
-      const treatment = matchTreatment(rawInput);
-      if (treatment) {
-        return {
-          state: {
-            ...currentState,
-            step: "show_pricing",
-            treatment: treatment.name,
-          },
-          messages: [
-            `Excelente elección. Sobre ${treatment.name}:`,
-            `${treatment.description}`,
-            `💰 Rango orientativo en Clínica Aurora: ${treatment.priceRange} (${treatment.duration}).`,
-            "¿Te reservamos una cita de valoración para revisarte en persona?",
-          ],
-          quickReplies: ["Sí, ver horarios disponibles", "Ver otro tratamiento", "Hablar con una recepcionista"],
-        };
-      }
+    return {
+      state: { step: "init" },
+      messages: [
+        `¡Hola! 👋 Te damos la bienvenida a ${config.clinicName}.`,
+        "Soy el asistente virtual inteligente de la clínica. ¿Cómo te llamas para poder dirigirme a ti?",
+      ],
+      quickReplies: ["Hola, me llamo Carlos", "Soy María", "Prefiero consultar un precio"],
+    };
+  }
 
-      // Si no reconoció un tratamiento exacto
+  function replyBot(currentState: ChatState, userInput: string): BotResponse {
+    const rawInput = (userInput || "").trim();
+    const norm = normalizeText(rawInput);
+
+    if (norm.length === 0) {
       return {
         state: currentState,
-        messages: [
-          `Gracias por el detalle. Atendemos esa consulta habitualmente. Para brindarte el rango de costos preciso realizamos una primera valoración diagnóstica orientativa ($30 - $50 USD).`,
-          "Puedes elegir uno de nuestros tratamientos principales o comentarnos si prefieres ver horarios de agenda:",
-        ],
-        quickReplies: [
-          "Limpieza dental",
-          "Blanqueamiento LED",
-          "Ortodoncia invisible",
-          "Implantes dentales",
-          "Ver horarios de cita",
-        ],
+        messages: [`Disculpa, no recibí ningún mensaje. ¿En qué te podemos ayudar hoy en ${shortName}?`],
+        quickReplies: ["Ver tratamientos", "Quiero agendar cita", "Hablar con un humano"],
       };
     }
 
-    case "show_pricing": {
-      if (norm.includes("otro") || norm.includes("volver") || norm.includes("lista")) {
+    // Si en cualquier punto piden un humano
+    if (detectHumanIntent(norm)) {
+      return {
+        state: { ...currentState, step: "human_handoff", needsHuman: true },
+        messages: [
+          "Por supuesto. Comprendo perfectamente que quieras atención personalizada con nuestro equipo clínico.",
+          "Por favor indícame tu número de WhatsApp o teléfono con código de área para que nuestra recepcionista te contacte en los próximos minutos.",
+        ],
+        quickReplies: ["Dejar mi número", "Volver al asistente automático"],
+      };
+    }
+
+    // Manejo por estado
+    switch (currentState.step) {
+      case "init": {
+        const name = extractPatientName(rawInput);
+        const matched = matchTreatmentFromList(rawInput, config.treatments);
+
+        if (matched) {
+          return {
+            state: {
+              ...currentState,
+              step: "show_pricing",
+              patientName: name,
+              treatment: matched.name,
+            },
+            messages: [
+              `¡Mucho gusto, ${name}! Encantado de saludarte.`,
+              `Respecto a ${matched.name}: ${matched.description}`,
+              `💰 Rango orientativo: ${matched.priceRange} (duración: ${matched.duration}).`,
+              "¿Te gustaría agendar una cita o valoración con nuestros especialistas?",
+            ],
+            quickReplies: ["Sí, agendar cita", "Ver otros tratamientos", "Hablar con recepcionista"],
+          };
+        }
+
         return {
-          state: { ...currentState, step: "ask_treatment" },
-          messages: ["Sin problema, cuéntame qué otro tratamiento te interesa consultar:"],
-          quickReplies: [
-            "Limpieza dental",
-            "Blanqueamiento LED",
-            "Ortodoncia invisible",
-            "Implantes dentales",
-            "Valoración estética",
+          state: { ...currentState, step: "ask_treatment", patientName: name },
+          messages: [
+            `¡Mucho gusto, ${name}! Un placer ayudarte hoy.`,
+            "¿Qué tratamiento o motivo de consulta tienes en mente?",
           ],
+          quickReplies: treatmentQuickReplies,
         };
       }
 
-      // Si el mensaje trae una frase de cambio de tratamiento
-      const newTreatment = matchTreatment(rawInput);
-      if (newTreatment && (!currentState.treatment || normalizeText(newTreatment.name) !== normalizeText(currentState.treatment))) {
+      case "ask_treatment": {
+        const treatment = matchTreatmentFromList(rawInput, config.treatments);
+        if (treatment) {
+          return {
+            state: {
+              ...currentState,
+              step: "show_pricing",
+              treatment: treatment.name,
+            },
+            messages: [
+              `Excelente elección. Sobre ${treatment.name}:`,
+              `${treatment.description}`,
+              `💰 Rango orientativo en ${shortName}: ${treatment.priceRange} (${treatment.duration}).`,
+              "¿Te reservamos una cita de valoración para revisarte en persona?",
+            ],
+            quickReplies: ["Sí, ver horarios disponibles", "Ver otro tratamiento", "Hablar con una recepcionista"],
+          };
+        }
+
+        // Si no reconoció un tratamiento exacto
+        const fallbackMsg = config.isCustomDemo
+          ? `Gracias por el detalle. En ${shortName} realizamos una primera valoración para darte información y presupuesto exacto (precio a confirmar por la clínica).`
+          : "Gracias por el detalle. Atendemos esa consulta habitualmente. Para brindarte el rango de costos preciso realizamos una primera valoración diagnóstica orientativa ($30 - $50 USD).";
+
         return {
-          state: {
-            ...currentState,
-            treatment: newTreatment.name,
-          },
+          state: currentState,
           messages: [
-            `Por supuesto. Sobre ${newTreatment.name}:`,
-            `${newTreatment.description}`,
-            `💰 Rango orientativo en Clínica Aurora: ${newTreatment.priceRange} (${newTreatment.duration}).`,
-            "¿Te gustaría agendar una cita o valoración con nuestros especialistas?",
+            fallbackMsg,
+            "Puedes elegir uno de nuestros tratamientos principales o comentarnos si prefieres ver horarios de agenda:",
+          ],
+          quickReplies: [...treatmentQuickReplies.slice(0, 4), "Ver horarios de cita"],
+        };
+      }
+
+      case "show_pricing": {
+        if (norm.includes("otro") || norm.includes("volver") || norm.includes("lista")) {
+          return {
+            state: { ...currentState, step: "ask_treatment" },
+            messages: ["Sin problema, cuéntame qué otro tratamiento te interesa consultar:"],
+            quickReplies: treatmentQuickReplies,
+          };
+        }
+
+        // Si el mensaje trae una frase de cambio de tratamiento
+        const newTreatment = matchTreatmentFromList(rawInput, config.treatments);
+        if (
+          newTreatment &&
+          (!currentState.treatment || normalizeText(newTreatment.name) !== normalizeText(currentState.treatment))
+        ) {
+          return {
+            state: {
+              ...currentState,
+              treatment: newTreatment.name,
+            },
+            messages: [
+              `Por supuesto. Sobre ${newTreatment.name}:`,
+              `${newTreatment.description}`,
+              `💰 Rango orientativo en ${shortName}: ${newTreatment.priceRange} (${newTreatment.duration}).`,
+              "¿Te gustaría agendar una cita o valoración con nuestros especialistas?",
+            ],
+            quickReplies: ["Sí, ver horarios disponibles", "Ver otros tratamientos", "Hablar con recepcionista"],
+          };
+        }
+
+        // Si confirma o responde afirmativamente
+        if (isAffirmative(rawInput)) {
+          return {
+            state: { ...currentState, step: "ask_time" },
+            messages: [
+              `Perfecto ${currentState.patientName || ""}. Tenemos estos 3 espacios disponibles esta semana ${doctorLine}:`,
+              "Por favor elige el horario que más te convenga:",
+            ],
+            quickReplies: AVAILABLE_SLOTS,
+          };
+        }
+
+        // Si responde negativamente
+        if (isNegative(rawInput)) {
+          return {
+            state: currentState,
+            messages: [
+              "Comprendo perfectamente, sin compromiso. Si deseas consultar otro tratamiento o resolver dudas con el equipo clínico, avísanos.",
+              "¿Qué te gustaría hacer?",
+            ],
+            quickReplies: ["Ver otros tratamientos", "Hablar con recepcionista", "Sí, ver horarios disponibles"],
+          };
+        }
+
+        // Texto no reconocido: se queda en show_pricing y no avanza
+        return {
+          state: currentState,
+          messages: [
+            "¿Te gustaría que te muestre los horarios disponibles para una cita o prefieres consultar los detalles de otro tratamiento?",
           ],
           quickReplies: ["Sí, ver horarios disponibles", "Ver otros tratamientos", "Hablar con recepcionista"],
         };
       }
 
-      // Si confirma o responde afirmativamente
-      if (isAffirmative(rawInput)) {
-        return {
-          state: { ...currentState, step: "ask_time" },
-          messages: [
-            `Perfecto ${currentState.patientName || ""}. Tenemos estos 3 espacios disponibles esta semana con la Dra. Méndez en Clínica Aurora:`,
-            "Por favor elige el horario que más te convenga:",
-          ],
-          quickReplies: AVAILABLE_SLOTS,
-        };
-      }
+      case "ask_time": {
+        if (norm.includes("otro") || norm.includes("volver")) {
+          return {
+            state: { ...currentState, step: "ask_treatment" },
+            messages: ["De acuerdo, volvemos a la lista de tratamientos. ¿Cuál deseas consultar?"],
+            quickReplies: treatmentQuickReplies,
+          };
+        }
 
-      // Si responde negativamente
-      if (isNegative(rawInput)) {
+        const slot = matchSlot(rawInput);
+        if (slot) {
+          return {
+            state: {
+              ...currentState,
+              step: "ask_phone",
+              selectedTime: slot,
+            },
+            messages: [
+              `Anotado: ${slot}. Para formalizar la pre-reserva y enviarte el recordatorio de confirmación por WhatsApp, ¿a qué número de WhatsApp te escribimos?`,
+            ],
+            quickReplies: ["+34 612 34 56 78", "+1 (305) 555-0199", "+54 9 11 4000-0000"],
+          };
+        }
+
+        // Si no coincide con un slot válido
         return {
           state: currentState,
           messages: [
-            "Comprendo perfectamente, sin compromiso. Si deseas consultar otro tratamiento o resolver dudas con el equipo clínico, avísanos.",
-            "¿Qué te gustaría hacer?",
+            "Por el momento solo disponemos de estos 3 espacios en la agenda inmediata:",
+            "Si necesitas otro día o franja horaria especial, con gusto te comunicamos con nuestra recepcionista:",
           ],
-          quickReplies: ["Ver otros tratamientos", "Hablar con recepcionista", "Sí, ver horarios disponibles"],
+          quickReplies: [...AVAILABLE_SLOTS, "Hablar con recepcionista"],
         };
       }
 
-      // Texto no reconocido: se queda en show_pricing y no avanza
-      return {
-        state: currentState,
-        messages: [
-          "¿Te gustaría que te muestre los horarios disponibles para una cita o prefieres consultar los detalles de otro tratamiento?",
-        ],
-        quickReplies: ["Sí, ver horarios disponibles", "Ver otros tratamientos", "Hablar con recepcionista"],
-      };
-    }
+      case "ask_phone": {
+        const validPhone = parsePhone(rawInput);
+        if (validPhone) {
+          return {
+            state: {
+              ...currentState,
+              step: "confirmed",
+              phone: validPhone,
+            },
+            messages: [
+              `🎉 ¡Listo, ${currentState.patientName || "Paciente"}! Tu cita ha quedado pre-reservada con éxito en ${config.clinicName}.`,
+              `📋 Resumen de tu solicitud:\n• Paciente: ${currentState.patientName || "Confirmado"}\n• Tratamiento: ${currentState.treatment || "Valoración general"}\n• Horario: ${currentState.selectedTime || "A convenir"}\n• WhatsApp de contacto: ${validPhone}`,
+              "Te hemos enviado un recordatorio de cortesía. Recuerda que no requiere pago anticipado. Si necesitas reprogramar, solo tienes que responder a este mismo chat.",
+            ],
+            quickReplies: ["Reiniciar conversación", "Agendar para otra persona", "Contactar por WhatsApp"],
+          };
+        }
 
-    case "ask_time": {
-      if (norm.includes("otro") || norm.includes("volver")) {
         return {
-          state: { ...currentState, step: "ask_treatment" },
-          messages: ["De acuerdo, volvemos a la lista de tratamientos. ¿Cuál deseas consultar?"],
-          quickReplies: [
-            "Limpieza dental",
-            "Blanqueamiento LED",
-            "Ortodoncia invisible",
-            "Implantes dentales",
-            "Valoración estética",
-          ],
-        };
-      }
-
-      const slot = matchSlot(rawInput);
-      if (slot) {
-        return {
-          state: {
-            ...currentState,
-            step: "ask_phone",
-            selectedTime: slot,
-          },
+          state: currentState,
           messages: [
-            `Anotado: ${slot}. Para formalizar la pre-reserva y enviarte el recordatorio de confirmación por WhatsApp, ¿a qué número de WhatsApp te escribimos?`,
+            "El número ingresado no parece válido. Por favor indícanos un número de teléfono o WhatsApp con código de país o área (por ejemplo: +34 600 11 22 33):",
           ],
           quickReplies: ["+34 612 34 56 78", "+1 (305) 555-0199", "+54 9 11 4000-0000"],
         };
       }
 
-      // Si no coincide con un slot válido
-      return {
-        state: currentState,
-        messages: [
-          "Por el momento solo disponemos de estos 3 espacios en la agenda inmediata:",
-          "Si necesitas otro día o franja horaria especial, con gusto te comunicamos con nuestra recepcionista:",
-        ],
-        quickReplies: [...AVAILABLE_SLOTS, "Hablar con recepcionista"],
-      };
-    }
+      case "human_handoff": {
+        if (norm.includes("volver")) {
+          return {
+            state: { ...currentState, step: "ask_treatment", needsHuman: false },
+            messages: ["De vuelta al asistente automático. ¿Qué tratamiento te gustaría consultar hoy?"],
+            quickReplies: treatmentQuickReplies.slice(0, 4),
+          };
+        }
 
-    case "ask_phone": {
-      const validPhone = parsePhone(rawInput);
-      if (validPhone) {
-        return {
-          state: {
-            ...currentState,
-            step: "confirmed",
-            phone: validPhone,
-          },
-          messages: [
-            `🎉 ¡Listo, ${currentState.patientName || "Paciente"}! Tu cita ha quedado pre-reservada con éxito en Clínica Dental Aurora.`,
-            `📋 Resumen de tu solicitud:\n• Paciente: ${currentState.patientName || "Confirmado"}\n• Tratamiento: ${currentState.treatment || "Valoración general"}\n• Horario: ${currentState.selectedTime || "A convenir"}\n• WhatsApp de contacto: ${validPhone}`,
-            "Te hemos enviado un recordatorio de cortesía. Recuerda que no requiere pago anticipado. Si necesitas reprogramar, solo tienes que responder a este mismo chat.",
-          ],
-          quickReplies: ["Reiniciar conversación", "Agendar para otra persona", "Contactar por WhatsApp"],
-        };
-      }
+        if (norm.includes("dejar mi numero")) {
+          return {
+            state: currentState,
+            messages: [
+              "Por favor indícanos tu número de WhatsApp o teléfono con código de área para que nuestra recepcionista te contacte a la brevedad.",
+            ],
+            quickReplies: ["+34 612 34 56 78", "+1 (305) 555-0199", "+54 9 11 4000-0000"],
+          };
+        }
 
-      return {
-        state: currentState,
-        messages: [
-          "El número ingresado no parece válido. Por favor indícanos un número de teléfono o WhatsApp con código de país o área (por ejemplo: +34 600 11 22 33):",
-        ],
-        quickReplies: ["+34 612 34 56 78", "+1 (305) 555-0199", "+54 9 11 4000-0000"],
-      };
-    }
+        const validPhone = parsePhone(rawInput);
+        if (validPhone) {
+          return {
+            state: {
+              ...currentState,
+              step: "confirmed",
+              phone: validPhone,
+              needsHuman: true,
+            },
+            messages: [
+              `✅ Gracias por dejar tu contacto (${validPhone}). Hemos notificado al equipo de recepción de ${shortName}.`,
+              "Una recepcionista humana te escribirá o llamará a la brevedad para resolver todas tus dudas personalizadas.",
+            ],
+            quickReplies: ["Reiniciar asistente", "Ver tratamientos"],
+          };
+        }
 
-    case "human_handoff": {
-      if (norm.includes("volver")) {
-        return {
-          state: { ...currentState, step: "ask_treatment", needsHuman: false },
-          messages: ["De vuelta al asistente automático. ¿Qué tratamiento te gustaría consultar hoy?"],
-          quickReplies: [
-            "Limpieza dental",
-            "Blanqueamiento LED",
-            "Ortodoncia invisible",
-            "Implantes dentales",
-          ],
-        };
-      }
-
-      if (norm.includes("dejar mi numero")) {
         return {
           state: currentState,
           messages: [
-            "Por favor indícanos tu número de WhatsApp o teléfono con código de área para que nuestra recepcionista te contacte a la brevedad.",
+            "No hemos reconocido un número telefónico válido. Por favor ingresa tu número con código de área para que podamos comunicarte con recepción.",
           ],
           quickReplies: ["+34 612 34 56 78", "+1 (305) 555-0199", "+54 9 11 4000-0000"],
         };
       }
 
-      const validPhone = parsePhone(rawInput);
-      if (validPhone) {
+      case "confirmed": {
+        if (norm.includes("reiniciar") || norm.includes("nuevo") || norm.includes("otra")) {
+          return getInitialBotGreeting();
+        }
         return {
-          state: {
-            ...currentState,
-            step: "confirmed",
-            phone: validPhone,
-            needsHuman: true,
-          },
+          state: currentState,
           messages: [
-            `✅ Gracias por dejar tu contacto (${validPhone}). Hemos notificado al equipo de recepción de Clínica Aurora.`,
-            "Una recepcionista humana te escribirá o llamará a la brevedad para resolver todas tus dudas personalizadas.",
+            "Tu cita ya está registrada. Si tienes alguna otra duda o consulta adicional sobre tu visita, aquí estamos.",
           ],
-          quickReplies: ["Reiniciar asistente", "Ver tratamientos"],
+          quickReplies: ["Reiniciar conversación", "Consultar otro tratamiento"],
         };
       }
 
-      return {
-        state: currentState,
-        messages: [
-          "No hemos reconocido un número telefónico válido. Por favor ingresa tu número con código de área para que podamos comunicarte con recepción.",
-        ],
-        quickReplies: ["+34 612 34 56 78", "+1 (305) 555-0199", "+54 9 11 4000-0000"],
-      };
-    }
-
-    case "confirmed": {
-      if (norm.includes("reiniciar") || norm.includes("nuevo") || norm.includes("otra")) {
+      default:
         return getInitialBotGreeting();
-      }
-      return {
-        state: currentState,
-        messages: [
-          "Tu cita ya está registrada. Si tienes alguna otra duda o consulta adicional sobre tu visita, aquí estamos.",
-        ],
-        quickReplies: ["Reiniciar conversación", "Consultar otro tratamiento"],
-      };
     }
-
-    default:
-      return getInitialBotGreeting();
   }
+
+  return {
+    getInitialBotGreeting,
+    replyBot,
+  };
 }
+
+const defaultBot = createClinicBot(DEFAULT_CONFIG);
+export const getInitialBotGreeting = defaultBot.getInitialBotGreeting;
+export const replyBot = defaultBot.replyBot;

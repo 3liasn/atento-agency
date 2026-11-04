@@ -9,7 +9,12 @@ import {
   parsePhone,
   TREATMENTS,
   AVAILABLE_SLOTS,
+  createClinicBot,
+  prospectoToConfig,
 } from "./chatBot.ts";
+import { parseCsv, loadProspectos, getProspectoBySlug } from "./prospectos.ts";
+import fs from "node:fs";
+import path from "node:path";
 
 console.log("🧪 Iniciando tests unitarios para chatBot.ts...");
 
@@ -221,5 +226,56 @@ for (const bad of invalidPhones) {
   assert.strictEqual(res.state.phone, undefined);
 }
 console.log("✓ Test 13: Validación estricta de teléfono en ask_phone y human_handoff verificada");
+
+// Test 14: parseCsv y loadProspectos sobre data/prospectos.example.csv
+console.log("\n🧪 Ejecutando tests de prospectos y demos personalizadas...");
+const csvRaw = fs.readFileSync(path.join(process.cwd(), "data", "prospectos.example.csv"), "utf-8");
+const parsedProspectos = parseCsv(csvRaw);
+assert.strictEqual(parsedProspectos.length, 2, "Debe haber 2 filas en prospectos.example.csv");
+assert.deepStrictEqual(parsedProspectos[0].servicios, [
+  "limpieza facial",
+  "botox",
+  "acido hialuronico",
+  "laser",
+]);
+assert.strictEqual(parsedProspectos[0].ficticio, true);
+assert.strictEqual(parsedProspectos[0].slug, "clinica-estetica-luna-demo");
+assert.strictEqual(loadProspectos().length, 2);
+console.log("✓ Test 14: parseCsv devuelve 2 filas y los 4 servicios de Luna con ficticio=true");
+
+// Test 15: Saludo del bot personalizado para clinica-estetica-luna-demo
+const luna = getProspectoBySlug("clinica-estetica-luna-demo");
+assert(luna, "Debe encontrar clinica-estetica-luna-demo");
+const lunaConfig = prospectoToConfig(luna);
+const lunaBot = createClinicBot(lunaConfig);
+const lunaGreeting = lunaBot.getInitialBotGreeting();
+const fullGreetingText = lunaGreeting.messages.join(" ");
+assert(fullGreetingText.includes("Clinica Estetica Luna Demo"), "El saludo debe incluir el nombre de la clínica");
+assert(fullGreetingText.includes("Madrid"), "El saludo debe incluir la ciudad");
+assert(fullGreetingText.includes("IA"), "El saludo debe avisar que es IA");
+assert(fullGreetingText.includes("DEMO"), "El saludo debe avisar que es DEMO");
+assert(fullGreetingText.includes("datos ficticios"), "El saludo debe avisar datos ficticios");
+assert(!fullGreetingText.includes("Aurora"), "El saludo de Luna no debe mencionar Aurora");
+console.log("✓ Test 15: Saludo personalizado de Luna contiene nombre, ciudad, IA, DEMO y no Aurora");
+
+// Test 16: «quiero botox» en el bot Luna lleva a show_pricing
+const lunaStep1 = lunaBot.replyBot(lunaGreeting.state, "Hola, soy Laura");
+assert.strictEqual(lunaStep1.state.step, "ask_treatment");
+const lunaBotox = lunaBot.replyBot(lunaStep1.state, "quiero botox");
+assert.strictEqual(lunaBotox.state.step, "show_pricing");
+assert(lunaBotox.state.treatment?.toLowerCase().includes("botox"));
+assert(lunaBotox.messages.some((m) => m.includes("Precio a confirmar")));
+console.log("✓ Test 16: «quiero botox» en bot Luna transiciona a show_pricing sin inventar precios");
+
+// Test 17: «limpieza dental» no matchea tratamientos dentales de Aurora en el bot Luna
+const lunaDentalAttempt = lunaBot.replyBot(lunaStep1.state, "limpieza dental");
+assert.strictEqual(lunaDentalAttempt.state.step, "ask_treatment");
+assert.strictEqual(lunaDentalAttempt.state.treatment, undefined);
+assert(!lunaDentalAttempt.messages.join(" ").includes("Aurora"));
+console.log("✓ Test 17: «limpieza dental» no matchea con tratamientos de Aurora en el bot Luna");
+
+// Test 18: Slug desconocido devuelve undefined
+assert.strictEqual(getProspectoBySlug("no-existe-slug-xyz"), undefined);
+console.log("✓ Test 18: getProspectoBySlug devuelve undefined para slug inexistente");
 
 console.log("\n🎉 TODOS LOS TESTS DE chatBot.ts PASARON CON ÉXITO.");
