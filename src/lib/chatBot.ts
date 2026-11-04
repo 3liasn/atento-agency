@@ -78,12 +78,243 @@ export const AVAILABLE_SLOTS = [
   "Pasado mañana a las 10:00 hs",
 ];
 
-function normalizeText(text: string): string {
+export function normalizeText(text: string): string {
   return text
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .trim();
+}
+
+const STOP_WORDS = new Set([
+  "y",
+  "e",
+  "quiero",
+  "quisiera",
+  "necesito",
+  "busco",
+  "para",
+  "con",
+  "tengo",
+  "estoy",
+  "vengo",
+  "me",
+  "mi",
+  "un",
+  "una",
+  "el",
+  "la",
+  "los",
+  "las",
+  "que",
+  "por",
+  "favor",
+  "prefiero",
+  "consultar",
+  "precio",
+  "precios",
+  "presupuesto",
+  "cita",
+  "citas",
+  "turno",
+  "turnos",
+  "agendar",
+  "horario",
+  "horarios",
+  "limpieza",
+  "blanqueamiento",
+  "ortodoncia",
+  "brackets",
+  "implante",
+  "implantes",
+  "carillas",
+  "botox",
+  "estetica",
+]);
+
+function capitalizeWord(word: string, isFirst: boolean): string {
+  const lower = word.toLowerCase();
+  const particles = new Set(["de", "del", "la", "las", "los"]);
+  if (!isFirst && particles.has(lower)) {
+    return lower;
+  }
+  return lower.charAt(0).toUpperCase() + lower.slice(1);
+}
+
+export function extractPatientName(rawInput: string): string {
+  if (!rawInput || typeof rawInput !== "string") return "Paciente";
+
+  // Quitar saludos iniciales comunes
+  const text = rawInput
+    .replace(/^(?:hola|buenas tardes|buenas noches|buen d[ií]a|buenas|saludos)[,.\s]*/i, "")
+    .trim();
+
+  // Intentar regex con prefijo explícito (ej. "me llamo", "soy", "mi nombre es", "me dicen")
+  const prefixMatch = text.match(/(?:me llamo|soy|mi nombre es|me dicen)\s+([^,.;!?]+)/i);
+  let candidate = "";
+
+  if (prefixMatch && prefixMatch[1]) {
+    candidate = prefixMatch[1].trim();
+  } else {
+    // Si no hay prefijo, separar antes de signos de puntuación
+    const punctuationSplit = text.split(/[,.;!?]/)[0].trim();
+    const words = punctuationSplit.split(/\s+/).filter(Boolean);
+
+    // Si tiene entre 1 y 3 palabras y ninguna es stop word ni contiene números
+    if (words.length >= 1 && words.length <= 3) {
+      const hasInvalidWord = words.some((w) => {
+        const norm = normalizeText(w);
+        return STOP_WORDS.has(norm) || /[^A-Za-zÀ-ÿ'’-]/.test(w);
+      });
+      if (!hasInvalidWord) {
+        candidate = words.join(" ");
+      }
+    }
+  }
+
+  if (!candidate) return "Paciente";
+
+  // Si extrajimos con prefijo, recortar si contiene stop words
+  const candidateWords = candidate.split(/\s+/).filter(Boolean);
+  const acceptedWords: string[] = [];
+
+  for (let i = 0; i < candidateWords.length; i++) {
+    const rawWord = candidateWords[i].replace(/[^A-Za-zÀ-ÿ'’-]/g, "");
+    if (!rawWord) break;
+    const norm = normalizeText(rawWord);
+
+    // Si encontramos una stop word y ya tenemos palabras, cortamos aquí
+    if (STOP_WORDS.has(norm)) {
+      break;
+    }
+    acceptedWords.push(rawWord);
+    if (acceptedWords.length >= 4) break; // Máximo 4 palabras de nombre
+  }
+
+  if (acceptedWords.length === 0) return "Paciente";
+
+  // Capitalizar cada palabra respetando partículas intermedias
+  const formatted = acceptedWords
+    .map((word, idx) => capitalizeWord(word, idx === 0))
+    .join(" ")
+    .trim();
+
+  return formatted || "Paciente";
+}
+
+export function isAffirmative(text: string): boolean {
+  if (!text) return false;
+  const norm = normalizeText(text);
+
+  // Si contiene negación explícita, no es afirmativo
+  if (/\b(no|todavia no|luego|despues|mas tarde|ahora no|cancelar)\b/i.test(norm)) {
+    return false;
+  }
+
+  // Tokens o frases afirmativas
+  const affirmativePattern =
+    /\b(si|claro|dale|ok|okay|vale|perfecto|agendar|reservar|cita|horarios?|disponibles?|quiero agendar)\b/i;
+
+  return (
+    affirmativePattern.test(norm) ||
+    norm.includes("ver horarios") ||
+    norm.includes("ver horario") ||
+    norm.includes("agendar cita")
+  );
+}
+
+export function isNegative(text: string): boolean {
+  if (!text) return false;
+  const norm = normalizeText(text);
+  return /\b(no|no gracias|despues|luego|mas tarde|todavia no|ahora no|cancelar)\b/i.test(norm);
+}
+
+export function matchSlot(text: string): string | undefined {
+  if (!text) return undefined;
+  const norm = normalizeText(text);
+
+  // Coincidencia directa con algún slot completo
+  for (const slot of AVAILABLE_SLOTS) {
+    if (norm.includes(normalizeText(slot))) {
+      return slot;
+    }
+  }
+
+  // Coincidencia por número de opción o índice ordinal
+  if (
+    /\b(1|primero|primera|primera opcion|la primera|el primero|opcion 1)\b/i.test(norm) &&
+    !/\b(2|3|segund|tercer)\b/i.test(norm)
+  ) {
+    return AVAILABLE_SLOTS[0];
+  }
+  if (
+    /\b(2|segundo|segunda|segunda opcion|la segunda|el segundo|opcion 2)\b/i.test(norm) &&
+    !/\b(1|3|primer|tercer)\b/i.test(norm)
+  ) {
+    return AVAILABLE_SLOTS[1];
+  }
+  if (
+    /\b(3|tercero|tercera|tercera opcion|la tercera|el tercero|opcion 3)\b/i.test(norm) &&
+    !/\b(1|2|primer|segund)\b/i.test(norm)
+  ) {
+    return AVAILABLE_SLOTS[2];
+  }
+
+  // Coincidencia por hora o combinación hora + día
+  if (norm.includes("11:30") || norm.includes("11.30") || norm.includes("once y media")) {
+    return AVAILABLE_SLOTS[0];
+  }
+
+  if (
+    norm.includes("16:00") ||
+    norm.includes("16.00") ||
+    norm.includes("16 hs") ||
+    norm.includes("4 pm") ||
+    norm.includes("4 de la tarde") ||
+    (norm.includes("manana") && norm.includes("16"))
+  ) {
+    return AVAILABLE_SLOTS[1];
+  }
+
+  if (
+    norm.includes("10:00") ||
+    norm.includes("10.00") ||
+    norm.includes("10 hs") ||
+    norm.includes("diez de la manana") ||
+    (norm.includes("pasado manana") && (norm.includes("10") || norm.includes("manana")))
+  ) {
+    return AVAILABLE_SLOTS[2];
+  }
+
+  return undefined;
+}
+
+export function parsePhone(raw: string): string | undefined {
+  if (!raw || typeof raw !== "string") return undefined;
+  const trimmed = raw.trim();
+
+  // Si contiene letras, no es un teléfono válido
+  if (/[A-Za-zÀ-ÿ]/.test(trimmed)) {
+    return undefined;
+  }
+
+  // Caracteres permitidos: dígitos, +, (), -, ., /, espacios
+  if (!/^[0-9+\-()./\s]+$/.test(trimmed)) {
+    return undefined;
+  }
+
+  // Si incluye '+', solo puede estar al principio
+  if (trimmed.indexOf("+") > 0) {
+    return undefined;
+  }
+
+  // Extraer sólo los dígitos y validar rango E.164 (8 a 15 dígitos)
+  const digits = trimmed.replace(/\D/g, "");
+  if (digits.length < 8 || digits.length > 15) {
+    return undefined;
+  }
+
+  return trimmed;
 }
 
 function detectHumanIntent(normalized: string): boolean {
@@ -152,17 +383,9 @@ export function replyBot(currentState: ChatState, userInput: string): BotRespons
   // Manejo por estado
   switch (currentState.step) {
     case "init": {
-      // Extraer nombre de expresiones como "Hola, me llamo Carlos" o "Soy Maria"
-      let name = rawInput;
-      const cleanMatch = rawInput.match(/(?:me llamo|soy|mi nombre es)\s+([A-Za-zÀ-ÿ]+)/i);
-      if (cleanMatch && cleanMatch[1]) {
-        name = cleanMatch[1];
-      } else if (rawInput.split(" ").length <= 3) {
-        name = rawInput.replace(/[^A-Za-zÀ-ÿ\s]/g, "").trim();
-      }
-      if (!name) name = "Paciente";
-
+      const name = extractPatientName(rawInput);
       const matched = matchTreatment(rawInput);
+
       if (matched) {
         return {
           state: {
@@ -248,63 +471,173 @@ export function replyBot(currentState: ChatState, userInput: string): BotRespons
         };
       }
 
-      // Proceder a horarios
+      // Si el mensaje trae una frase de cambio de tratamiento
+      const newTreatment = matchTreatment(rawInput);
+      if (newTreatment && (!currentState.treatment || normalizeText(newTreatment.name) !== normalizeText(currentState.treatment))) {
+        return {
+          state: {
+            ...currentState,
+            treatment: newTreatment.name,
+          },
+          messages: [
+            `Por supuesto. Sobre ${newTreatment.name}:`,
+            `${newTreatment.description}`,
+            `💰 Rango orientativo en Clínica Aurora: ${newTreatment.priceRange} (${newTreatment.duration}).`,
+            "¿Te gustaría agendar una cita o valoración con nuestros especialistas?",
+          ],
+          quickReplies: ["Sí, ver horarios disponibles", "Ver otros tratamientos", "Hablar con recepcionista"],
+        };
+      }
+
+      // Si confirma o responde afirmativamente
+      if (isAffirmative(rawInput)) {
+        return {
+          state: { ...currentState, step: "ask_time" },
+          messages: [
+            `Perfecto ${currentState.patientName || ""}. Tenemos estos 3 espacios disponibles esta semana con la Dra. Méndez en Clínica Aurora:`,
+            "Por favor elige el horario que más te convenga:",
+          ],
+          quickReplies: AVAILABLE_SLOTS,
+        };
+      }
+
+      // Si responde negativamente
+      if (isNegative(rawInput)) {
+        return {
+          state: currentState,
+          messages: [
+            "Comprendo perfectamente, sin compromiso. Si deseas consultar otro tratamiento o resolver dudas con el equipo clínico, avísanos.",
+            "¿Qué te gustaría hacer?",
+          ],
+          quickReplies: ["Ver otros tratamientos", "Hablar con recepcionista", "Sí, ver horarios disponibles"],
+        };
+      }
+
+      // Texto no reconocido: se queda en show_pricing y no avanza
       return {
-        state: { ...currentState, step: "ask_time" },
+        state: currentState,
         messages: [
-          `Perfecto ${currentState.patientName || ""}. Tenemos estos 3 espacios disponibles esta semana con la Dra. Méndez en Clínica Aurora:`,
-          "Por favor elige el horario que más te convenga:",
+          "¿Te gustaría que te muestre los horarios disponibles para una cita o prefieres consultar los detalles de otro tratamiento?",
         ],
-        quickReplies: AVAILABLE_SLOTS,
+        quickReplies: ["Sí, ver horarios disponibles", "Ver otros tratamientos", "Hablar con recepcionista"],
       };
     }
 
     case "ask_time": {
-      const chosenSlot = AVAILABLE_SLOTS.find((s) => norm.includes(normalizeText(s))) || rawInput;
+      if (norm.includes("otro") || norm.includes("volver")) {
+        return {
+          state: { ...currentState, step: "ask_treatment" },
+          messages: ["De acuerdo, volvemos a la lista de tratamientos. ¿Cuál deseas consultar?"],
+          quickReplies: [
+            "Limpieza dental",
+            "Blanqueamiento LED",
+            "Ortodoncia invisible",
+            "Implantes dentales",
+            "Valoración estética",
+          ],
+        };
+      }
+
+      const slot = matchSlot(rawInput);
+      if (slot) {
+        return {
+          state: {
+            ...currentState,
+            step: "ask_phone",
+            selectedTime: slot,
+          },
+          messages: [
+            `Anotado: ${slot}. Para formalizar la pre-reserva y enviarte el recordatorio de confirmación por WhatsApp, ¿a qué número de WhatsApp te escribimos?`,
+          ],
+          quickReplies: ["+34 612 34 56 78", "+1 (305) 555-0199", "+54 9 11 4000-0000"],
+        };
+      }
+
+      // Si no coincide con un slot válido
       return {
-        state: {
-          ...currentState,
-          step: "ask_phone",
-          selectedTime: chosenSlot,
-        },
+        state: currentState,
         messages: [
-          `Anotado: ${chosenSlot}. Para formalizar la pre-reserva y enviarte el recordatorio de confirmación por WhatsApp, ¿a qué número de WhatsApp te escribimos?`,
+          "Por el momento solo disponemos de estos 3 espacios en la agenda inmediata:",
+          "Si necesitas otro día o franja horaria especial, con gusto te comunicamos con nuestra recepcionista:",
+        ],
+        quickReplies: [...AVAILABLE_SLOTS, "Hablar con recepcionista"],
+      };
+    }
+
+    case "ask_phone": {
+      const validPhone = parsePhone(rawInput);
+      if (validPhone) {
+        return {
+          state: {
+            ...currentState,
+            step: "confirmed",
+            phone: validPhone,
+          },
+          messages: [
+            `🎉 ¡Listo, ${currentState.patientName || "Paciente"}! Tu cita ha quedado pre-reservada con éxito en Clínica Dental Aurora.`,
+            `📋 Resumen de tu solicitud:\n• Paciente: ${currentState.patientName || "Confirmado"}\n• Tratamiento: ${currentState.treatment || "Valoración general"}\n• Horario: ${currentState.selectedTime || "A convenir"}\n• WhatsApp de contacto: ${validPhone}`,
+            "Te hemos enviado un recordatorio de cortesía. Recuerda que no requiere pago anticipado. Si necesitas reprogramar, solo tienes que responder a este mismo chat.",
+          ],
+          quickReplies: ["Reiniciar conversación", "Agendar para otra persona", "Contactar por WhatsApp"],
+        };
+      }
+
+      return {
+        state: currentState,
+        messages: [
+          "El número ingresado no parece válido. Por favor indícanos un número de teléfono o WhatsApp con código de país o área (por ejemplo: +34 600 11 22 33):",
         ],
         quickReplies: ["+34 612 34 56 78", "+1 (305) 555-0199", "+54 9 11 4000-0000"],
       };
     }
 
-    case "ask_phone": {
-      const phone = rawInput;
-      return {
-        state: {
-          ...currentState,
-          step: "confirmed",
-          phone,
-        },
-        messages: [
-          `🎉 ¡Listo, ${currentState.patientName || "Paciente"}! Tu cita ha quedado pre-reservada con éxito en Clínica Dental Aurora.`,
-          `📋 Resumen de tu solicitud:\n• Paciente: ${currentState.patientName || "Confirmado"}\n• Tratamiento: ${currentState.treatment || "Valoración general"}\n• Horario: ${currentState.selectedTime || "A convenir"}\n• WhatsApp de contacto: ${phone}`,
-          "Te hemos enviado un recordatorio de cortesía. Recuerda que no requiere pago anticipado. Si necesitas reprogramar, solo tienes que responder a este mismo chat.",
-        ],
-        quickReplies: ["Reiniciar conversación", "Agendar para otra persona", "Contactar por WhatsApp"],
-      };
-    }
-
     case "human_handoff": {
-      const phone = rawInput;
+      if (norm.includes("volver")) {
+        return {
+          state: { ...currentState, step: "ask_treatment", needsHuman: false },
+          messages: ["De vuelta al asistente automático. ¿Qué tratamiento te gustaría consultar hoy?"],
+          quickReplies: [
+            "Limpieza dental",
+            "Blanqueamiento LED",
+            "Ortodoncia invisible",
+            "Implantes dentales",
+          ],
+        };
+      }
+
+      if (norm.includes("dejar mi numero")) {
+        return {
+          state: currentState,
+          messages: [
+            "Por favor indícanos tu número de WhatsApp o teléfono con código de área para que nuestra recepcionista te contacte a la brevedad.",
+          ],
+          quickReplies: ["+34 612 34 56 78", "+1 (305) 555-0199", "+54 9 11 4000-0000"],
+        };
+      }
+
+      const validPhone = parsePhone(rawInput);
+      if (validPhone) {
+        return {
+          state: {
+            ...currentState,
+            step: "confirmed",
+            phone: validPhone,
+            needsHuman: true,
+          },
+          messages: [
+            `✅ Gracias por dejar tu contacto (${validPhone}). Hemos notificado al equipo de recepción de Clínica Aurora.`,
+            "Una recepcionista humana te escribirá o llamará a la brevedad para resolver todas tus dudas personalizadas.",
+          ],
+          quickReplies: ["Reiniciar asistente", "Ver tratamientos"],
+        };
+      }
+
       return {
-        state: {
-          ...currentState,
-          step: "confirmed",
-          phone,
-          needsHuman: true,
-        },
+        state: currentState,
         messages: [
-          `✅ Gracias por dejar tu contacto (${phone}). Hemos notificado al equipo de recepción de Clínica Aurora.`,
-          "Una recepcionista humana te escribirá o llamará a la brevedad para resolver todas tus dudas personalizadas.",
+          "No hemos reconocido un número telefónico válido. Por favor ingresa tu número con código de área para que podamos comunicarte con recepción.",
         ],
-        quickReplies: ["Reiniciar asistente", "Ver tratamientos"],
+        quickReplies: ["+34 612 34 56 78", "+1 (305) 555-0199", "+54 9 11 4000-0000"],
       };
     }
 

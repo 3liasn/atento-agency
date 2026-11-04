@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
+import { FoundersOffer } from "@/components/FoundersOffer";
 import { Problem } from "@/components/Problem";
 import { Benefits } from "@/components/Benefits";
 import { HowItWorks } from "@/components/HowItWorks";
@@ -15,6 +16,7 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         <Hero />
+        <FoundersOffer />
         <Problem />
         <Benefits />
         <HowItWorks />

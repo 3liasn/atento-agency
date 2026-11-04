@@ -26,8 +26,13 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
+                <Link href="#fundadores" className="text-amber-400 font-semibold hover:text-amber-300 transition-colors flex items-center gap-1.5">
+                  <span>🎁</span> Oferta fundadores (3 cupos)
+                </Link>
+              </li>
+              <li>
                 <Link href="#oferta" className="hover:text-white transition-colors">
-                  Oferta y Beneficios
+                  Qué ofrecemos y Beneficios
                 </Link>
               </li>
               <li>

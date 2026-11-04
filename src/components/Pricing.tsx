@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { SITE } from "@/content/site";
 
 export function Pricing() {
@@ -15,6 +16,16 @@ export function Pricing() {
           <p className="mt-4 text-base sm:text-lg text-slate-600">
             Tarifas de setup único más suscripción mensual. Precios en USD netos (facturación disponible en EUR aproximado).
           </p>
+
+          <div className="mt-5 inline-flex flex-wrap items-center justify-center gap-1.5 rounded-2xl bg-amber-50 border border-amber-300/80 px-4 py-2 text-xs sm:text-sm font-semibold text-amber-900 shadow-xs">
+            <span>🎁 ¿Eres de las primeras 3 clínicas?</span>
+            <Link
+              href="#fundadores"
+              className="font-bold text-teal-800 underline underline-offset-2 hover:text-teal-950"
+            >
+              Mira la oferta fundadores con setup bonificado y 14 días gratis →
+            </Link>
+          </div>
         </div>
 
         <div className="mt-14 grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
@@ -110,8 +121,13 @@ export function Pricing() {
         </div>
 
         {/* Guarantee Note */}
-        <div className="mt-12 text-center text-xs text-slate-500 max-w-xl mx-auto">
-          ¿Tienes múltiples sedes o requerimientos especiales? Escríbenos para armar un plan a la medida de tu red clínica.
+        <div className="mt-12 text-center text-xs text-slate-500 max-w-xl mx-auto space-y-1.5">
+          <p>
+            Los precios anteriores corresponden a las tarifas estándar vigentes desde la clínica n.º 4 en adelante.
+          </p>
+          <p>
+            ¿Tienes múltiples sedes o requerimientos especiales? Escríbenos para armar un plan a la medida de tu red clínica.
+          </p>
         </div>
       </div>
     </section>

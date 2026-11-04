@@ -21,6 +21,22 @@ export function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Main Copy */}
           <div className="lg:col-span-7 text-center lg:text-left">
+            {/* Pill de Oferta Fundadores */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-4">
+              <Link
+                href="#fundadores"
+                className="group inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-50/90 px-3.5 py-1.5 text-xs font-semibold text-amber-900 transition-all hover:bg-amber-100 hover:border-amber-500/50 shadow-xs"
+              >
+                <span className="text-sm">🎁</span>
+                <span>
+                  <strong>Oferta fundadores:</strong> 3 cupos · setup gratis o 50% off + 14 días de prueba
+                </span>
+                <span className="text-amber-700 font-bold group-hover:translate-x-0.5 transition-transform">
+                  →
+                </span>
+              </Link>
+            </div>
+
             <div className="inline-flex items-center gap-2 rounded-full border border-teal-600/20 bg-teal-50/80 px-3.5 py-1.5 text-xs font-semibold text-teal-800 mb-6 shadow-xs">
               <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
               Especializado en clínicas dentales y centros de estética
@@ -82,6 +98,15 @@ export function Hero() {
                 </svg>
                 Español clínico y empático
               </span>
+              <Link
+                href="#fundadores"
+                className="flex items-center gap-1.5 text-teal-700 font-semibold hover:text-teal-900 transition-colors underline-offset-2 hover:underline"
+              >
+                <svg className="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                </svg>
+                3 cupos fundadores disponibles
+              </Link>
             </div>
           </div>
 

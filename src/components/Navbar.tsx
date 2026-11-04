@@ -16,16 +16,29 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-700">
-          {SITE.navLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 rounded-md px-1 py-1"
-            >
-              {link.label}
-            </Link>
-          ))}
+        <nav className="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium text-slate-700">
+          {SITE.navLinks.map((link) => {
+            const isFounders = link.href === "#fundadores";
+            return (
+              <Link
+                key={link.label}
+                href={link.href}
+                className={
+                  isFounders
+                    ? "inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500/15 to-teal-500/15 border border-amber-500/40 px-3 py-1 text-xs font-bold text-amber-900 hover:bg-amber-100 hover:border-amber-600/60 shadow-xs transition-all"
+                    : "transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 rounded-md px-1 py-1"
+                }
+              >
+                {isFounders && <span className="text-xs">🎁</span>}
+                <span>{link.label}</span>
+                {isFounders && (
+                  <span className="rounded-full bg-amber-500/20 px-1.5 py-0.2 text-[10px] font-extrabold text-amber-800">
+                    3 cupos
+                  </span>
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Action CTAs */}
@@ -74,16 +87,31 @@ export function Navbar() {
       {/* Mobile dropdown */}
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-slate-200 bg-white px-4 pt-2 pb-6 space-y-3">
-          {SITE.navLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="block rounded-lg px-3 py-2 text-base font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-800"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {SITE.navLinks.map((link) => {
+            const isFounders = link.href === "#fundadores";
+            return (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={
+                  isFounders
+                    ? "flex items-center justify-between rounded-lg bg-amber-50/90 border border-amber-300/70 px-3 py-2 text-base font-bold text-amber-900 hover:bg-amber-100"
+                    : "block rounded-lg px-3 py-2 text-base font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-800"
+                }
+              >
+                <span className="flex items-center gap-2">
+                  {isFounders && <span>🎁</span>}
+                  <span>{link.label}</span>
+                </span>
+                {isFounders && (
+                  <span className="rounded-full bg-amber-500/20 px-2 py-0.5 text-xs font-bold text-amber-800">
+                    3 cupos
+                  </span>
+                )}
+              </Link>
+            );
+          })}
           <div className="pt-3 border-t border-slate-100 flex flex-col gap-2.5">
             <Link
               href="/demo"

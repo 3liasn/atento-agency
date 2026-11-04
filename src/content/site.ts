@@ -6,7 +6,8 @@ export const SITE = {
   whatsappNumber: "595981000000",
   whatsappUrl: "https://wa.me/595981000000?text=Hola%20Atento%2C%20quiero%20informaci%C3%B3n%20para%20mi%20cl%C3%ADnica",
   navLinks: [
-    { label: "Oferta", href: "#oferta" },
+    { label: "Oferta fundadores", href: "#fundadores" },
+    { label: "Qué ofrecemos", href: "#oferta" },
     { label: "Cómo funciona", href: "#como-funciona" },
     { label: "Precios", href: "#precios" },
     { label: "FAQ", href: "#faq" },
@@ -170,7 +171,48 @@ export const SITE = {
       tag: "Ejemplo ficticio de demo",
     },
   ],
+  founders: {
+    totalSpots: 3,
+    spotsTaken: 0,
+    badge: "Programa Fundadores · Cupos Limitados",
+    title: "Oferta Fundadores: Solo para las primeras 3 clínicas",
+    subtitle:
+      "Lanza la recepción con IA de tu clínica con condiciones de lanzamiento irrepetibles a cambio de construir juntos tu caso de éxito.",
+    durationTrialDays: 14,
+    options: [
+      {
+        tag: "Opción A",
+        title: "Setup 100% Gratis",
+        setupDiscountText: "Setup bonificado ($0 USD)",
+        trialText: "14 días de prueba gratis",
+        description:
+          "Bonificación completa del costo de setup en cualquiera de nuestros planes. Solo pagas la suscripción mensual regular una vez finalizada la prueba de 14 días.",
+      },
+      {
+        tag: "Opción B",
+        title: "50% OFF en Setup + Onboarding VIP",
+        setupDiscountText: "50% de descuento en el setup",
+        trialText: "14 días de prueba gratis",
+        description:
+          "Pagas solo la mitad del setup inicial y accedes a soporte directo prioritario en el ajuste de tus protocolos clínicos y respuestas.",
+      },
+    ],
+    inExchange: [
+      "Testimonio sincero (en vídeo breve o por escrito) tras tus primeras 2 a 4 semanas de uso.",
+      "Permiso para mostrar métricas reales y resultados alcanzados (con el nombre de tu clínica o 100% anonimizados, a acordar según tu preferencia).",
+      "Garantía de transparencia: el testimonio será real y aprobado por ti antes de publicarse.",
+    ],
+    afterNote:
+      "Aviso de transparencia: Desde la clínica n.º 4 en adelante aplican los precios regulares de setup y mensualidad de cada plan sin bonificación.",
+    cta: "Postular a 1 de los 3 cupos fundadores",
+    ctaHref:
+      "https://wa.me/595981000000?text=Hola%20Atento%2C%20quiero%20uno%20de%20los%203%20cupos%20fundadores%20para%20mi%20cl%C3%ADnica",
+  },
   faqs: [
+    {
+      q: "¿Cómo funciona la oferta fundadores y qué requisitos tiene?",
+      a: "La oferta fundadores es exclusiva para las primeras 3 clínicas que inicien con Atento. Ofrece 14 días de prueba gratis y a elegir: setup 100% bonificado ($0 USD) o 50% de descuento en el setup inicial en cualquiera de nuestros planes regulares. A cambio solicitamos un testimonio sobre la experiencia y autorización para compartir métricas de resultados conseguidos (las cuales pueden ser anonimizadas si lo prefieres). El testimonio siempre será aprobado formalmente por ti antes de publicarse. A partir de la 4.ª clínica aplican las tarifas completas estándar.",
+    },
     {
       q: "¿Reemplaza Atento a mi recepcionista o secretaria?",
       a: "No, la potencia. Atento atiende las preguntas repetitivas (precios orientativos, ubicación, horarios) y captura citas cuando el personal está ocupado o fuera de turno. Tu equipo puede intervenir en cualquier conversación con un solo clic.",
