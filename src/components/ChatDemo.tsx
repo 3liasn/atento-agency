@@ -102,7 +102,7 @@ export function ChatDemo() {
             </div>
             <p className="text-xs text-muted font-medium flex items-center gap-1.5 mt-0.5">
               <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-              Asistente de recepción IA activo 24/7
+              Recepción de la clínica · activa 24/7
             </p>
           </div>
         </div>
@@ -139,7 +139,7 @@ export function ChatDemo() {
               >
                 {!isUser && (
                   <p className="text-[11px] font-bold text-accent mb-1 flex items-center gap-1">
-                    <span>Atento IA</span>
+                    <span>Atento</span>
                   </p>
                 )}
                 <div className="whitespace-pre-line leading-relaxed">{m.text}</div>

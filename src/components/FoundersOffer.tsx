@@ -18,7 +18,7 @@ export function FoundersOffer() {
         className="pointer-events-none absolute inset-0 opacity-70"
         style={{
           background:
-            "radial-gradient(ellipse 50% 40% at 50% 0%, rgba(200,169,107,0.08), transparent 70%)",
+            "radial-gradient(ellipse 50% 40% at 50% 0%, rgba(200,169,106,0.10), transparent 70%)",
         }}
       />
 

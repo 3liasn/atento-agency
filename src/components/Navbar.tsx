@@ -29,24 +29,18 @@ export function Navbar() {
 
         <div className="hidden lg:flex items-center gap-3">
           <a
-            href={SITE.whatsappUrl}
+            href={SITE.primaryCta.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center rounded-full border border-accent/60 px-4 py-2 text-sm font-medium text-accent hover:bg-accent-muted transition-colors"
+            className="inline-flex min-h-10 items-center rounded-full bg-navy px-5 py-2 text-sm font-semibold text-white hover:bg-ink transition-colors"
           >
-            WhatsApp
+            Ver la demo con mi clínica
           </a>
-          <Link
-            href="/demo"
-            className="inline-flex items-center rounded-full bg-accent px-4 py-2 text-sm font-semibold text-background hover:bg-accent-hover transition-colors"
-          >
-            Probar demo
-          </Link>
         </div>
 
         <button
           type="button"
-          className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border text-foreground"
+          className="lg:hidden inline-flex h-12 w-12 items-center justify-center rounded-lg border border-border text-foreground"
           aria-expanded={open}
           aria-label="Abrir menú"
           onClick={() => setOpen((v) => !v)}
@@ -74,13 +68,15 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/demo"
-              className="mt-2 inline-flex justify-center rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-background"
+            <a
+              href={SITE.primaryCta.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex min-h-12 items-center justify-center rounded-full bg-navy px-4 py-2.5 text-sm font-semibold text-white"
               onClick={() => setOpen(false)}
             >
-              Probar demo
-            </Link>
+              Ver la demo con mi clínica
+            </a>
           </div>
         </div>
       ) : null}

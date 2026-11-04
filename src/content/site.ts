@@ -1,17 +1,21 @@
 export const SITE = {
   name: "Atento",
-  tagline: "Tu recepción con IA, siempre atenta.",
+  tagline: "Tu recepción, siempre atenta.",
   description:
     "Asistente con inteligencia artificial para clínicas dentales y de estética. Responde en segundos por WhatsApp y web 24/7, agenda citas reales y recupera pacientes sin cambiar tu agenda.",
   whatsappNumber: "886979516713",
   whatsappUrl: "https://wa.me/886979516713?text=Hola%20Atento%2C%20quiero%20informaci%C3%B3n%20para%20mi%20cl%C3%ADnica",
+  primaryCta: {
+    label: "Ver la demo con mi clínica",
+    href: "https://wa.me/886979516713?text=Hola%20Atento%2C%20quiero%20ver%20la%20demo%20con%20mi%20cl%C3%ADnica",
+    reassurance: "Sin tarjeta · sin permanencia · te respondo yo, no un robot",
+  },
   navLinks: [
     { label: "Cómo funciona", href: "#como-funciona" },
-    { label: "Para clínicas", href: "#oferta" },
+    { label: "Demo", href: "#demo" },
     { label: "Precios", href: "#precios" },
     { label: "Fundadores", href: "#fundadores" },
-    { label: "Demo", href: "/demo" },
-    { label: "Contacto", href: "#contacto" },
+    { label: "Preguntas", href: "#faq" },
   ],
   stats: [
     { value: "24/7", label: "Respuesta continua" },
@@ -79,7 +83,7 @@ export const SITE = {
     {
       step: "02",
       title: "Configuración en 48–72 horas",
-      desc: "Entrenamos tu IA, conectamos el canal oficial de WhatsApp y el widget web, y realizamos pruebas con casos reales.",
+      desc: "Configuramos Atento con tu protocolo, conectamos el canal oficial de WhatsApp y el widget web, y realizamos pruebas con casos reales.",
     },
     {
       step: "03",
@@ -101,7 +105,7 @@ export const SITE = {
       monthlyEurApprox: 139,
       description: "Ideal para consultorios individuales o clínicas que quieren cubrir el canal web y WhatsApp básico.",
       features: [
-        "Asistente IA para WhatsApp y Web 24/7",
+        "Recepción por WhatsApp y web 24/7",
         "Calificación de motivos y agendamiento básico",
         "Configuración de horarios de atención",
         "Hasta 500 conversaciones mensuales",
@@ -112,7 +116,7 @@ export const SITE = {
     {
       name: "Crecimiento",
       recommended: true,
-      badge: "Más elegido",
+      badge: "Recomendado",
       setupUsd: 990,
       monthlyUsd: 299,
       monthlyEurApprox: 279,
@@ -153,7 +157,7 @@ export const SITE = {
     badge: "Programa Fundadores · Cupos Limitados",
     title: "Oferta Fundadores: Solo para las primeras 3 clínicas",
     subtitle:
-      "Lanza la recepción con IA de tu clínica con condiciones de lanzamiento irrepetibles a cambio de construir juntos tu caso de éxito.",
+      "Lanza la nueva recepción de tu clínica con condiciones de lanzamiento irrepetibles a cambio de construir juntos tu caso de éxito.",
     durationTrialDays: 14,
     options: [
       {
@@ -199,7 +203,7 @@ export const SITE = {
     },
     {
       q: "¿El asistente inventa información o diagnósticos médicos?",
-      a: "No. La IA se programa bajo guardarraíles estrictos: solo responde con la información validada por tu clínica, brinda rangos de precio orientativos aprobados por ti y recuerda siempre que el diagnóstico definitivo lo realiza el profesional en consulta.",
+      a: "No. Atento se configura bajo guardarraíles estrictos: solo responde con la información validada por tu clínica, brinda rangos de precio orientativos aprobados por ti y recuerda siempre que el diagnóstico definitivo lo realiza el profesional en consulta.",
     },
     {
       q: "¿Cuánto tiempo toma tener el sistema listo?",

@@ -3,9 +3,10 @@ import { SITE } from "@/content/site";
 
 export function Problem() {
   return (
-    <section className="py-16 md:py-24 bg-background border-y border-border">
+    <section id="problema" className="scroll-mt-24 py-16 md:py-24 bg-background border-y border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
+          <p className="eyebrow mb-4">El problema</p>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-foreground leading-tight">
             {SITE.problem.title}
           </h2>
@@ -17,7 +18,7 @@ export function Problem() {
         <div className="mt-12 sm:mt-14 max-w-4xl mx-auto divide-y divide-border border-y border-border">
           {SITE.problem.points.map((pt, i) => (
             <div key={i} className="grid grid-cols-[auto_1fr] gap-4 sm:gap-6 py-6 sm:py-7">
-              <span className="font-serif text-2xl text-accent/90 leading-none pt-0.5">
+              <span className="font-serif text-2xl text-accent leading-none pt-0.5">
                 0{i + 1}
               </span>
               <div>
