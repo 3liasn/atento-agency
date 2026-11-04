@@ -27,4 +27,4 @@ Usar como guía de estilo. **No copiar marcas, logos ni textos** de Hollin / Opt
 2. **Nueva sección** `AgentMockup` (después del Hero o de Problem): phone frame + cards en español (resumen, cita, mensaje enviado) + label `Concept · fictional data`.
 3. Tokens: `--color-surface` cálido, `--color-accent` rojo/naranja único; cards `rounded-2xl ring-1 ring-black/5`.
 4. Corregir bugs del merge previo si siguen: `Contact.tsx` SVG `viewBox="0  24 24"` → `0 0 24 24`; botones con `text-slate-950` sobre gradiente oscuro → `text-white`.
-5. No tocar `chatBot.ts` / tests / precios / `595981000000`.
+5. No tocar `chatBot.ts` / tests / precios / `886979516713`.
