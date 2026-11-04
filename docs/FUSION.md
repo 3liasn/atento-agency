@@ -77,3 +77,7 @@ Actualiza `.orquesta-gates` para incluir `npm test` además de lint y build.
 - Rama nueva vía orquesta, PR **draft**, base `master`.
 - Título sugerido: `[fusión] Landing Atento: contenido PR#1 + diseño Higgsfield (sin cifras sin fuente)`
 - Body: qué se fusionó, cifras quitadas, WhatsApp de prueba intacto, captura pendiente.
+
+
+## Referencias visuales (Silvio 4/11)
+Ver `docs/REFS-VISUAL.md` y `docs/referencias/`. Aplicar a Hero (serif editorial + acento) y sección AgentMockup (celular ES + Concept · fictional data). No copiar marcas.
