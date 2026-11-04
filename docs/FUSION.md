@@ -13,7 +13,7 @@ Una sola landing Next.js que conserve el contenido/funcionalidad de PR #1 y adop
 2. Precios exactos: Esencial $490 + $149/mes; Crecimiento $990 + $299/mes; Premium $1.990 + $499/mes.
 3. Oferta fundadores: 3 cupos; setup gratis O 50%; 14 días de prueba a cambio de testimonio.
 4. FAQ completa de `SITE.faqs`.
-5. WhatsApp de prueba SIN CAMBIAR: `wa.me/595981000000` (`SITE.whatsappNumber` / `SITE.whatsappUrl`).
+5. WhatsApp real: `wa.me/886979516713` (`SITE.whatsappNumber` / `SITE.whatsappUrl`).
 6. Componentes y página demo existentes salvo los cambios de diseño/contenido listados abajo.
 
 ## Traer de PR #2 (diseño + imagen)
@@ -24,7 +24,7 @@ Una sola landing Next.js que conserve el contenido/funcionalidad de PR #1 y adop
    - Tipografía bold tracking-tight; cards `rounded-2xl` con `ring-1 ring-black/5 shadow-sm`.
    - Navbar sticky blanca con blur; botón WhatsApp verde `#25D366`.
    - Hero en 2 columnas (texto | imagen) en desktop; imagen con `rounded-2xl shadow-xl`.
-   - Floating botón WhatsApp abajo a la derecha (mantener número de prueba 595981000000).
+   - Floating botón WhatsApp abajo a la derecha (mantener este número 886979516713).
 3. Banner superior de piloto opcional, sin el WA falso 15550000000 de PR #2.
 4. Sección problema al estilo Higgsfield: títulos cualitativos SIN porcentajes inventados (p. ej. «Cada mensaje sin respuesta es una cita que no llega»), 3 cards.
 5. NO copiar el WA `15550000000` ni `data-placeholder` de PR #2.
