@@ -6,7 +6,7 @@ export function Benefits() {
     <section id="oferta" className="scroll-mt-24 py-16 md:py-24 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-block rounded-full bg-teal-100/70 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-teal-800 mb-3 border border-teal-200">
+          <span className="inline-block rounded-full bg-rose-50 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-rose-800 mb-3 border border-rose-200">
             Nuestra propuesta de valor
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
@@ -21,9 +21,9 @@ export function Benefits() {
           {SITE.benefits.map((benefit, i) => (
             <div
               key={i}
-              className="flex flex-col rounded-2xl ring-1 ring-black/5 bg-white p-7 shadow-sm transition-all hover:border-teal-500/40 hover:shadow-md"
+              className="flex flex-col rounded-2xl ring-1 ring-black/5 bg-white p-7 shadow-sm transition-all hover:border-rose-500/40 hover:shadow-md"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-teal-50 text-2xl mb-5 border border-teal-100">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-rose-50 text-2xl mb-5 border border-rose-100">
                 {benefit.icon}
               </div>
               <h3 className="text-xl font-bold text-slate-900">{benefit.title}</h3>

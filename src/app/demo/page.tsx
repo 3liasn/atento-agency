@@ -24,7 +24,7 @@ export default function DemoPage() {
           </div>
           <Link
             href="/"
-            className="text-teal-400 font-semibold hover:text-teal-300 underline underline-offset-2"
+            className="text-rose-400 font-semibold hover:text-rose-300 underline underline-offset-2"
           >
             ← Volver a la landing principal
           </Link>
@@ -40,7 +40,7 @@ export default function DemoPage() {
             </Link>
             <div className="hidden sm:block h-6 w-px bg-slate-200" />
             <div className="hidden sm:flex items-center gap-2.5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-teal-600 text-white font-bold text-xs">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-accent text-white font-bold text-xs">
                 CA
               </div>
               <div>
@@ -55,7 +55,7 @@ export default function DemoPage() {
               href={SITE.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-teal-700"
+              className="inline-flex items-center gap-2 rounded-xl bg-accent px-3.5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-accent"
             >
               <span>Pedir para mi clínica</span>
             </a>
@@ -66,7 +66,7 @@ export default function DemoPage() {
       {/* Chat Sandbox Body */}
       <main className="flex-1 py-8 sm:py-12 px-4 sm:px-6">
         <div className="mx-auto max-w-4xl text-center mb-8">
-          <span className="inline-block rounded-full bg-teal-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-teal-800 mb-2 border border-teal-200">
+          <span className="inline-block rounded-full bg-rose-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-rose-800 mb-2 border border-rose-200">
             Simulador client-side 100% privado
           </span>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">

@@ -7,7 +7,7 @@ export function Pricing() {
     <section id="precios" className="scroll-mt-24 py-16 md:py-24 bg-white border-t border-slate-200/70">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-block rounded-full bg-teal-100/70 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-teal-800 mb-3 border border-teal-200">
+          <span className="inline-block rounded-full bg-rose-50 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-rose-800 mb-3 border border-rose-200">
             Planes transparentes
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
@@ -21,7 +21,7 @@ export function Pricing() {
             <span>🎁 ¿Eres de las primeras 3 clínicas?</span>
             <Link
               href="#fundadores"
-              className="font-bold text-teal-800 underline underline-offset-2 hover:text-teal-950"
+              className="font-bold text-rose-800 underline underline-offset-2 hover:text-rose-950"
             >
               Mira la oferta fundadores con setup bonificado y 14 días gratis →
             </Link>
@@ -36,12 +36,12 @@ export function Pricing() {
                 key={tier.name}
                 className={`relative flex flex-col justify-between rounded-2xl p-8 transition-all ${
                   isFeatured
-                    ? "bg-white border-2 border-teal-600 shadow-xl"
+                    ? "bg-white border-2 border-accent shadow-xl"
                     : "bg-white border border-slate-200 shadow-sm hover:border-slate-300"
                 }`}
               >
                 {isFeatured && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-teal-700 to-indigo-700 px-4 py-1 text-xs font-bold text-white shadow-md uppercase tracking-wider">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-accent px-4 py-1 text-xs font-bold text-white shadow-md uppercase tracking-wider">
                     {tier.badge || "Más elegido"}
                   </div>
                 )}
@@ -66,7 +66,7 @@ export function Pricing() {
                     <p className="text-xs text-slate-500 mt-1 font-medium">
                       Setup inicial único: <strong className="text-slate-800">${tier.setupUsd} USD</strong>
                     </p>
-                    <p className="text-[11px] text-teal-700 mt-0.5 font-medium">
+                    <p className="text-[11px] text-accent mt-0.5 font-medium">
                       (Aprox. €{tier.monthlyEurApprox}/mes en facturación EUR)
                     </p>
                   </div>
@@ -80,7 +80,7 @@ export function Pricing() {
                       {tier.features.map((feat, idx) => (
                         <li key={idx} className="flex items-start gap-2.5">
                           <svg
-                            className="h-5 w-5 shrink-0 text-teal-600 mt-0.5"
+                            className="h-5 w-5 shrink-0 text-accent mt-0.5"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -106,10 +106,10 @@ export function Pricing() {
                     )}%20para%20mi%20cl%C3%ADnica`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`w-full inline-flex items-center justify-center rounded-xl py-3.5 px-4 text-center text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 ${
+                    className={`w-full inline-flex items-center justify-center rounded-xl py-3.5 px-4 text-center text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                       isFeatured
-                        ? "bg-gradient-to-r from-teal-700 to-indigo-700 text-white shadow-md hover:from-teal-800 hover:to-indigo-800 active:scale-[0.99]"
-                        : "bg-slate-100 text-slate-900 hover:bg-teal-50 hover:text-teal-900"
+                        ? "bg-accent text-white shadow-md hover:bg-accent-hover active:scale-[0.99]"
+                        : "bg-slate-100 text-slate-900 hover:bg-rose-50 hover:text-rose-900"
                     }`}
                   >
                     {tier.cta}

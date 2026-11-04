@@ -87,20 +87,20 @@ export function ChatDemo() {
   return (
     <div className="flex flex-col h-[650px] w-full max-w-2xl mx-auto rounded-3xl border border-slate-200/90 bg-white shadow-2xl overflow-hidden">
       {/* Aurora Clinic Header */}
-      <div className="bg-gradient-to-r from-teal-700 via-teal-800 to-slate-900 px-5 py-4 text-white flex items-center justify-between shrink-0">
+      <div className="bg-slate-900 px-5 py-4 text-white flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-xs border border-white/20 text-white font-extrabold text-base shadow-sm">
             <span>CA</span>
-            <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-400 ring-2 ring-teal-800" />
+            <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-400 ring-2 ring-slate-800" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-base font-bold text-white tracking-tight">Clínica Dental Aurora</h3>
-              <span className="rounded-full bg-teal-500/30 px-2 py-0.5 text-[10px] font-semibold text-teal-100 border border-teal-400/20">
+              <span className="rounded-full bg-rose-500/30 px-2 py-0.5 text-[10px] font-semibold text-rose-100 border border-rose-400/20">
                 Demo
               </span>
             </div>
-            <p className="text-xs text-teal-200 font-medium flex items-center gap-1.5 mt-0.5">
+            <p className="text-xs text-rose-200 font-medium flex items-center gap-1.5 mt-0.5">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
               Asistente de recepción IA activo 24/7
             </p>
@@ -133,19 +133,19 @@ export function ChatDemo() {
               <div
                 className={`max-w-[85%] sm:max-w-[78%] rounded-2xl px-4 py-3 text-sm shadow-xs ${
                   isUser
-                    ? "rounded-tr-none bg-teal-600 text-white"
+                    ? "rounded-tr-none bg-accent text-white"
                     : "rounded-tl-none bg-white border border-slate-200/80 text-slate-800"
                 }`}
               >
                 {!isUser && (
-                  <p className="text-[11px] font-bold text-teal-700 mb-1 flex items-center gap-1">
+                  <p className="text-[11px] font-bold text-accent mb-1 flex items-center gap-1">
                     <span>Atento IA</span>
                   </p>
                 )}
                 <div className="whitespace-pre-line leading-relaxed">{m.text}</div>
                 <span
                   className={`mt-1.5 block text-[10px] text-right ${
-                    isUser ? "text-teal-100" : "text-slate-400"
+                    isUser ? "text-rose-100" : "text-slate-400"
                   }`}
                 >
                   {m.timestamp}
@@ -161,9 +161,9 @@ export function ChatDemo() {
             <div className="rounded-2xl rounded-tl-none bg-white border border-slate-200/80 px-4 py-3 text-slate-500 shadow-xs flex items-center gap-2">
               <span className="text-xs font-medium text-slate-600">Aurora está respondiendo</span>
               <span className="flex gap-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-teal-600 animate-bounce [animation-delay:-0.3s]"></span>
-                <span className="h-1.5 w-1.5 rounded-full bg-teal-600 animate-bounce [animation-delay:-0.15s]"></span>
-                <span className="h-1.5 w-1.5 rounded-full bg-teal-600 animate-bounce"></span>
+                <span className="h-1.5 w-1.5 rounded-full bg-accent animate-bounce [animation-delay:-0.3s]"></span>
+                <span className="h-1.5 w-1.5 rounded-full bg-accent animate-bounce [animation-delay:-0.15s]"></span>
+                <span className="h-1.5 w-1.5 rounded-full bg-accent animate-bounce"></span>
               </span>
             </div>
           </div>
@@ -178,7 +178,7 @@ export function ChatDemo() {
               key={i}
               type="button"
               onClick={() => handleSendMessage(qr)}
-              className="shrink-0 rounded-full border border-teal-600/30 bg-white px-3.5 py-1.5 text-xs font-semibold text-teal-800 hover:bg-teal-50 hover:border-teal-500 transition-colors shadow-2xs"
+              className="shrink-0 rounded-full border border-rose-600/30 bg-white px-3.5 py-1.5 text-xs font-semibold text-rose-800 hover:bg-rose-50 hover:border-rose-500 transition-colors shadow-2xs"
             >
               {qr}
             </button>
@@ -200,13 +200,13 @@ export function ChatDemo() {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="Escribe tu mensaje (ej. 'Quiero blanqueamiento' o 'Hablar con humano')..."
-          className="flex-1 rounded-xl border border-slate-300 px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-600/20"
+          className="flex-1 rounded-xl border border-slate-300 px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
         />
         <button
           type="submit"
           disabled={!inputValue.trim() || isTyping}
           aria-label="Enviar mensaje"
-          className="inline-flex items-center justify-center rounded-xl bg-teal-600 p-2.5 text-white transition-all hover:bg-teal-700 disabled:opacity-40 disabled:cursor-not-allowed"
+          className="inline-flex items-center justify-center rounded-xl bg-accent p-2.5 text-white transition-all hover:bg-accent disabled:opacity-40 disabled:cursor-not-allowed"
         >
           <svg className="w-5 h-5 rotate-90" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />

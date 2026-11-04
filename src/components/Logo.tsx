@@ -11,12 +11,12 @@ export function Logo({ className = "", variant = "dark", size = "md" }: LogoProp
   const textSize = size === "sm" ? "text-lg" : size === "lg" ? "text-2xl" : "text-xl";
 
   const textColor = variant === "light" ? "text-white" : "text-slate-900";
-  const subColor = variant === "light" ? "text-teal-200" : "text-teal-600";
+  const subColor = variant === "light" ? "text-rose-200" : "text-accent";
 
   return (
     <div className={`inline-flex items-center gap-2.5 font-bold tracking-tight select-none ${className}`}>
       <div
-        className="relative flex items-center justify-center rounded-xl bg-gradient-to-tr from-teal-600 via-teal-500 to-emerald-400 text-white shadow-sm shadow-teal-500/20"
+        className="relative flex items-center justify-center rounded-xl bg-slate-900 text-white shadow-sm shadow-rose-500/20"
         style={{ width: iconSize + 8, height: iconSize + 8 }}
       >
         <svg
@@ -49,8 +49,8 @@ export function Logo({ className = "", variant = "dark", size = "md" }: LogoProp
           />
         </svg>
         <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-300 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent"></span>
         </span>
       </div>
       <div className="flex flex-col leading-none">

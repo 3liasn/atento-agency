@@ -25,8 +25,8 @@ export function Navbar() {
                 href={link.href}
                 className={
                   isFounders
-                    ? "inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500/15 to-teal-500/15 border border-amber-500/40 px-3 py-1 text-xs font-bold text-amber-900 hover:bg-amber-100 hover:border-amber-600/60 shadow-xs transition-all"
-                    : "transition-colors hover:text-teal-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 rounded-md px-1 py-1"
+                    ? "inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-500/15 to-rose-500/15 border border-amber-500/40 px-3 py-1 text-xs font-bold text-amber-900 hover:bg-amber-100 hover:border-amber-600/60 shadow-xs transition-all"
+                    : "transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md px-1 py-1"
                 }
               >
                 {isFounders && <span className="text-xs">🎁</span>}
@@ -45,7 +45,7 @@ export function Navbar() {
         <div className="hidden sm:flex items-center gap-3">
           <Link
             href="/demo"
-            className="inline-flex items-center justify-center rounded-xl border border-teal-600/30 bg-teal-50/60 px-4 py-2.5 text-sm font-semibold text-teal-800 transition-all hover:bg-teal-100/70 hover:border-teal-600/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
+            className="inline-flex items-center justify-center rounded-xl border border-rose-600/30 bg-rose-50/70 px-4 py-2.5 text-sm font-semibold text-rose-800 transition-all hover:bg-rose-50 hover:border-rose-600/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             Ver demo en vivo
           </Link>
@@ -53,7 +53,7 @@ export function Navbar() {
             href={SITE.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-teal-600/25 transition-all hover:bg-teal-700 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
+            className="inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-rose-600/20 transition-all hover:bg-accent-hover active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             <svg
               className="h-4 w-4 fill-current"
@@ -70,7 +70,7 @@ export function Navbar() {
         <button
           type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-slate-700 hover:text-teal-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500"
+          className="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-slate-700 hover:text-accent hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-accent"
           aria-expanded={mobileMenuOpen}
           aria-label="Abrir menú de navegación"
         >
@@ -97,7 +97,7 @@ export function Navbar() {
                 className={
                   isFounders
                     ? "flex items-center justify-between rounded-lg bg-amber-50/90 border border-amber-300/70 px-3 py-2 text-base font-bold text-amber-900 hover:bg-amber-100"
-                    : "block rounded-lg px-3 py-2 text-base font-medium text-slate-700 hover:bg-teal-50 hover:text-teal-800"
+                    : "block rounded-lg px-3 py-2 text-base font-medium text-slate-700 hover:bg-rose-50 hover:text-rose-800"
                 }
               >
                 <span className="flex items-center gap-2">
@@ -116,7 +116,7 @@ export function Navbar() {
             <Link
               href="/demo"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center rounded-xl border border-teal-600/30 bg-teal-50/60 px-4 py-2.5 text-sm font-semibold text-teal-800"
+              className="w-full text-center rounded-xl border border-rose-600/30 bg-rose-50/70 px-4 py-2.5 text-sm font-semibold text-rose-800"
             >
               Ver demo en vivo
             </Link>
@@ -124,7 +124,7 @@ export function Navbar() {
               href={SITE.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-teal-600/25"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-rose-600/20"
             >
               <span>Contactar por WhatsApp</span>
             </a>
