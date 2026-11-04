@@ -6,12 +6,12 @@ export const SITE = {
   whatsappNumber: "886979516713",
   whatsappUrl: "https://wa.me/886979516713?text=Hola%20Atento%2C%20quiero%20informaci%C3%B3n%20para%20mi%20cl%C3%ADnica",
   navLinks: [
-    { label: "Oferta fundadores", href: "#fundadores" },
-    { label: "Qué ofrecemos", href: "#oferta" },
     { label: "Cómo funciona", href: "#como-funciona" },
+    { label: "Para clínicas", href: "#oferta" },
     { label: "Precios", href: "#precios" },
-    { label: "FAQ", href: "#faq" },
-    { label: "Demo interactiva", href: "/demo" },
+    { label: "Fundadores", href: "#fundadores" },
+    { label: "Demo", href: "/demo" },
+    { label: "Contacto", href: "#contacto" },
   ],
   stats: [
     { value: "24/7", label: "Respuesta continua" },
@@ -40,32 +40,32 @@ export const SITE = {
   },
   benefits: [
     {
-      icon: "⚡",
+      icon: "01",
       title: "Respuesta inmediata 24/7",
       desc: "Atención inmediata día, noche y festivos con tono cálido, empático y adaptado a odontología y medicina estética.",
     },
     {
-      icon: "📅",
+      icon: "02",
       title: "Agendamiento guiado 24/7",
       desc: "Califica el motivo de consulta, ofrece los horarios libres y confirma la reserva directamente en tu flujo habitual.",
     },
     {
-      icon: "🔄",
+      icon: "03",
       title: "Follow-up inteligente",
       desc: "Recontacta con delicadeza a pacientes que pidieron información pero no confirmaron fecha, reactivando presupuestos.",
     },
     {
-      icon: "💬",
+      icon: "04",
       title: "Español natural y clínico",
       desc: "Comprende términos dentales y estéticos (limpieza, carillas, botox, ortodoncia invisible) sin sonar como un robot rígido.",
     },
     {
-      icon: "🔌",
+      icon: "05",
       title: "Sin cambiar tu software",
       desc: "Nos adaptamos a tu calendario actual (Google Calendar, agendas médicas o alertas directas a tu equipo).",
     },
     {
-      icon: "👤",
+      icon: "06",
       title: "Handoff humano transparente",
       desc: "Si el caso requiere atención médica o criterio especial, el bot deriva la conversación al personal al instante.",
     },
@@ -85,6 +85,11 @@ export const SITE = {
       step: "03",
       title: "Puesta en marcha y optimización",
       desc: "Tu clínica empieza a captar citas automáticamente con métricas de conversión semanales y soporte continuo.",
+    },
+    {
+      step: "04",
+      title: "Prueba de 14 días",
+      desc: "Validas el tono, el triaje y la agenda con pacientes reales. Sin permanencia obligatoria si no encaja.",
     },
   ],
   pricingTiers: [
@@ -213,4 +218,37 @@ export const SITE = {
       a: "No hay permanencia obligatoria. Creemos en relaciones basadas en resultados: puedes pausar o cancelar el servicio mensual avisando con 15 días de anticipación.",
     },
   ],
+
+  trust: {
+    aiNotice:
+      "Este asistente es una inteligencia artificial entrenada con el protocolo de tu clínica. Tu equipo puede intervenir en cualquier momento.",
+    trialBadge: "14 días de prueba · sin permanencia obligatoria",
+    privacyLabel: "Privacidad y RGPD — sin verificar",
+    privacyNote:
+      "Trabajamos con datos de pacientes. Cumplimiento normativo (RGPD/HIPAA) sin verificar: no afirmamos certificaciones hasta revisión legal.",
+    dataTitle: "Qué pasa con tus datos",
+    dataPoints: [
+      {
+        title: "Qué se guarda",
+        desc: "Mensajes de la demo y formularios de contacto para responderte. En producción: conversaciones necesarias para atender y agendar.",
+      },
+      {
+        title: "Quién accede",
+        desc: "Solo el equipo de Atento y, cuando lo conectes, el personal de tu clínica. No vendemos datos a terceros.",
+      },
+      {
+        title: "Cómo se borran",
+        desc: "Puedes pedir la eliminación de tus datos de contacto y demos escribiendo por WhatsApp. Los plazos legales se confirmarán en la política publicada.",
+      },
+    ],
+    founder: {
+      name: "Silvio",
+      role: "Fundador",
+      note:
+        "Atento nace para clínicas dentales y de estética que quieren recepción seria por WhatsApp sin improvisar. Espacio reservado para bio y foto reales; sin inventar trayectoria ni clientes.",
+      // Foto real pendiente: colocar archivo en /public/founder.jpg y poner photoSrc: "/founder.jpg"
+      photoSrc: null as string | null,
+    },
+    audienceNote: "Para clínicas dentales y de estética premium · Madrid y EE. UU.",
+  },
 };

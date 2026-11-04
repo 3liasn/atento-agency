@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/content/site";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 
-const playfair = Playfair_Display({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["500", "600"],
   style: ["normal", "italic"],
@@ -12,9 +12,17 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: "#0B0C0E",
 };
 
 export const metadata: Metadata = {
@@ -37,8 +45,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`scroll-smooth ${playfair.variable}`}>
-      <body className="min-h-screen bg-surface text-slate-900 antialiased font-sans selection:bg-rose-100 selection:text-rose-900">
+    <html lang="es" className={`scroll-smooth ${cormorant.variable} ${inter.variable}`}>
+      <body className="min-h-screen bg-background text-foreground antialiased font-sans selection:bg-accent/30 selection:text-foreground">
         {children}
         <WhatsAppFloat />
       </body>
