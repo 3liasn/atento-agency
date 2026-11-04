@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
+import { AgentMockup } from "@/components/AgentMockup";
 import { FoundersOffer } from "@/components/FoundersOffer";
 import { Problem } from "@/components/Problem";
 import { Benefits } from "@/components/Benefits";
@@ -11,10 +12,11 @@ import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-surface">
       <Navbar />
       <main className="flex-1">
         <Hero />
+        <AgentMockup />
         <FoundersOffer />
         <Problem />
         <Benefits />

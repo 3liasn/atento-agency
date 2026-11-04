@@ -1,7 +1,16 @@
 import type { Metadata, Viewport } from "next";
+import { Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/content/site";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+  display: "swap",
+});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -28,8 +37,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="scroll-smooth">
-      <body className="min-h-screen bg-white text-slate-900 antialiased font-sans selection:bg-teal-100 selection:text-teal-900">
+    <html lang="es" className={`scroll-smooth ${playfair.variable}`}>
+      <body className="min-h-screen bg-surface text-slate-900 antialiased font-sans selection:bg-rose-100 selection:text-rose-900">
         {children}
         <WhatsAppFloat />
       </body>
