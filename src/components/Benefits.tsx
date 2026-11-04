@@ -3,12 +3,12 @@ import { SITE } from "@/content/site";
 
 export function Benefits() {
   return (
-    <section id="oferta" className="scroll-mt-24 py-16 md:py-24 bg-surface">
+    <section id="beneficios" className="scroll-mt-24 py-16 md:py-24 bg-surface">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="eyebrow mb-4">Propuesta</p>
+          <p className="eyebrow mb-4">Beneficios</p>
           <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-foreground">
-            Diseñado para el flujo de una clínica
+            Lo que cambia en tu recepción
           </h2>
           <p className="mt-4 text-base sm:text-lg text-muted">
             No es un chatbot genérico. Es un protocolo entrenado para informar con calidez

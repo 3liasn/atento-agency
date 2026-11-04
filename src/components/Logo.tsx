@@ -23,7 +23,7 @@ export function Logo({ className = "", size = "md" }: LogoProps) {
           Atento
         </span>
         <span className="text-[9px] font-medium tracking-[0.18em] uppercase text-accent/85">
-          Agencia de IA
+          Recepción para clínicas
         </span>
       </span>
     </div>

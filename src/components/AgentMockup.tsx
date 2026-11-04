@@ -1,19 +1,19 @@
+import Link from "next/link";
 import React from "react";
 
 export function AgentMockup() {
   return (
-    <section className="py-16 md:py-24 bg-surface border-t border-border">
+    <section id="demo" aria-label="La solución: demo de WhatsApp" className="section-dark scroll-mt-24 py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           <div className="lg:col-span-6 text-center lg:text-left">
-            <p className="eyebrow mb-4">Cómo se ve en el móvil</p>
+            <p className="eyebrow mb-4">La solución</p>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-foreground leading-[1.15]">
               Cada conversación, un paciente{" "}
               <span className="italic text-accent font-semibold">confirmado</span>.
             </h2>
             <p className="mt-6 text-base sm:text-lg text-muted leading-relaxed">
-              Atento atiende las dudas en segundos. Califica el tratamiento, consulta
-              disponibilidad y agenda la cita en tu calendario habitual.
+              Atento responde en segundos con el tono y los precios orientativos de tu clínica, propone horarios libres y confirma la cita en tu calendario habitual.
             </p>
 
             <div className="mt-8 space-y-4 text-left max-w-lg mx-auto lg:mx-0">
@@ -45,6 +45,12 @@ export function AgentMockup() {
                 </div>
               ))}
             </div>
+            <Link
+              href="/demo"
+              className="mt-9 inline-flex min-h-12 items-center justify-center rounded-full border border-accent/60 px-6 py-3 text-sm font-semibold text-accent transition-colors hover:bg-accent-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            >
+              Escribir a la demo como si fuera un paciente →
+            </Link>
           </div>
 
           <div className="lg:col-span-6 flex flex-col items-center justify-center">
@@ -64,7 +70,7 @@ export function AgentMockup() {
                       </div>
                       <div>
                         <p className="text-xs font-semibold text-foreground leading-none">Atento Recepción</p>
-                        <p className="text-[10px] text-subtle mt-0.5">Clínica activa · 24/7 · IA</p>
+                        <p className="text-[10px] text-subtle mt-0.5">Clínica activa · 24/7</p>
                       </div>
                     </div>
                     <span className="inline-flex items-center gap-1 text-[10px] font-medium text-accent bg-accent-muted px-2 py-0.5 rounded-full border border-accent/25">
@@ -125,7 +131,7 @@ export function AgentMockup() {
                 </div>
               </div>
               <p className="mt-4 text-center text-xs text-subtle tracking-wide">
-                Concept · fictional data
+                Ejemplo ilustrativo · datos ficticios
               </p>
             </div>
           </div>

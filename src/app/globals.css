@@ -1,17 +1,36 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0B0C0E;
-  --foreground: #F3EFE7;
-  --surface: #111214;
-  --surface-raised: #181A1E;
-  --border: #2A2C31;
-  --muted: #B4B0A6;
-  --subtle: #8A877F;
-  --accent: #C8A96B;
-  --accent-hover: #DDC38A;
-  --accent-muted: #1E1C17;
+  /* Claro: marfil/blanco ~60 %, azul marino ~30 %, champán ~10 % (solo acento decorativo) */
+  --background: #F5F1E8;
+  --foreground: #0F1A33;
+  --surface: #FFFFFF;
+  --surface-raised: #FFFFFF;
+  --border: #E2DACB;
+  --muted: #3C4657;
+  --subtle: #5B6372;
+  --accent: #112735;        /* azul marino: botones, enlaces, cifras */
+  --accent-hover: #0F1A33;
+  --accent-muted: #ECE6D9;
+  --champagne: #C8A96A;     /* nunca texto ni botón sobre claro */
   --whatsapp: #25D366;
+}
+
+/* Única sección oscura: demo de WhatsApp */
+.section-dark {
+  --background: #12141A;
+  --foreground: #F3EFE7;
+  --surface: #12141A;
+  --surface-raised: #1A1D24;
+  --border: #2B2F38;
+  --muted: #C2BDB2;
+  --subtle: #9A968D;
+  --accent: #C8A96A;        /* champán sobre oscuro: contraste AA */
+  --accent-hover: #DDC38A;
+  --accent-muted: #24221D;
+  color-scheme: dark;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 @theme inline {
@@ -26,12 +45,15 @@
   --color-accent-hover: var(--accent-hover);
   --color-accent-muted: var(--accent-muted);
   --color-whatsapp: var(--whatsapp);
+  --color-champagne: var(--champagne);
+  --color-navy: #112735;
+  --color-ink: #0F1A33;
   --font-serif: var(--font-serif), "Cormorant Garamond", Georgia, serif;
   --font-sans: var(--font-sans), Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
@@ -60,24 +82,41 @@ body {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.eyebrow::before {
+  content: "";
+  width: 1.5rem;
+  height: 1px;
+  background: var(--champagne, #C8A96A);
 }
 
 .card-surface {
   background: var(--surface-raised);
   border: 1px solid var(--border);
   border-radius: 12px;
-  box-shadow: inset 0 1px 0 rgba(243, 239, 231, 0.045);
+  box-shadow: 0 1px 2px rgba(15, 26, 51, 0.04);
 }
 
 .soft-glow {
   box-shadow:
-    0 1px 0 rgba(243, 239, 231, 0.04) inset,
-    0 28px 70px -36px rgba(0, 0, 0, 0.85);
+    0 1px 2px rgba(15, 26, 51, 0.05),
+    0 24px 60px -32px rgba(15, 26, 51, 0.22);
 }
 
 .hairline {
   border-color: color-mix(in srgb, var(--border) 85%, transparent);
 }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.rise { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.rise-2 { animation-delay: 0.12s; }
+.rise-3 { animation-delay: 0.24s; }
 
 @media (prefers-reduced-motion: reduce) {
   html {
