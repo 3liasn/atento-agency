@@ -4,13 +4,13 @@ import { SITE } from "@/content/site";
 
 export function Pricing() {
   return (
-    <section id="precios" className="scroll-mt-24 py-16 md:py-24 bg-slate-50/70 border-t border-slate-200/70">
+    <section id="precios" className="scroll-mt-24 py-16 md:py-24 bg-white border-t border-slate-200/70">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-block rounded-full bg-teal-100/70 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-teal-800 mb-3 border border-teal-200">
             Planes transparentes
           </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
             Inversión clara, orientada al retorno de tu clínica
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-600">
@@ -34,14 +34,14 @@ export function Pricing() {
             return (
               <div
                 key={tier.name}
-                className={`relative flex flex-col justify-between rounded-3xl p-8 transition-all ${
+                className={`relative flex flex-col justify-between rounded-2xl p-8 transition-all ${
                   isFeatured
-                    ? "bg-white border-2 border-teal-600 shadow-2xl shadow-teal-900/15 lg:-translate-y-2"
+                    ? "bg-white border-2 border-teal-600 shadow-xl"
                     : "bg-white border border-slate-200 shadow-sm hover:border-slate-300"
                 }`}
               >
                 {isFeatured && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-teal-600 to-emerald-600 px-4 py-1 text-xs font-bold text-white shadow-md uppercase tracking-wider">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-teal-700 to-indigo-700 px-4 py-1 text-xs font-bold text-white shadow-md uppercase tracking-wider">
                     {tier.badge || "Más elegido"}
                   </div>
                 )}
@@ -108,7 +108,7 @@ export function Pricing() {
                     rel="noopener noreferrer"
                     className={`w-full inline-flex items-center justify-center rounded-xl py-3.5 px-4 text-center text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 ${
                       isFeatured
-                        ? "bg-teal-600 text-white shadow-md shadow-teal-600/30 hover:bg-teal-700 active:scale-[0.99]"
+                        ? "bg-gradient-to-r from-teal-700 to-indigo-700 text-white shadow-md hover:from-teal-800 hover:to-indigo-800 active:scale-[0.99]"
                         : "bg-slate-100 text-slate-900 hover:bg-teal-50 hover:text-teal-900"
                     }`}
                   >
@@ -120,8 +120,11 @@ export function Pricing() {
           })}
         </div>
 
-        {/* Guarantee Note */}
+        {/* Legal Note */}
         <div className="mt-12 text-center text-xs text-slate-500 max-w-xl mx-auto space-y-1.5">
+          <p>
+            Cumplimiento normativo (RGPD/HIPAA) sin verificar; no afirmamos certificaciones.
+          </p>
           <p>
             Los precios anteriores corresponden a las tarifas estándar vigentes desde la clínica n.º 4 en adelante.
           </p>

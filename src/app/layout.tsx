@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { SITE } from "@/content/site";
+import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -30,6 +31,7 @@ export default function RootLayout({
     <html lang="es" className="scroll-smooth">
       <body className="min-h-screen bg-white text-slate-900 antialiased font-sans selection:bg-teal-100 selection:text-teal-900">
         {children}
+        <WhatsAppFloat />
       </body>
     </html>
   );

@@ -3,11 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
+  --color-surface: #F7F8FB;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--color-surface);
 }
 
 html {

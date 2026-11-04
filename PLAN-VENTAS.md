@@ -10,7 +10,7 @@
 - **Sector primario:** Clínicas dentales privadas (1 a 4 sillones) y centros de medicina estética / armonización facial.
 - **Geografía inicial:** España (Madrid, Barcelona, Valencia, Sevilla), US Hispano (Miami, Orlando, Texas) y capitales de LatAm con ticket medio/alto (Bogotá, Santiago, CDMX, Asunción).
 - **Dolor crítico:**
-  - Tienen campañas en Instagram / Google Ads o buen posicionamiento local, pero el 60-70% de los mensajes entran por la tarde/noche o fines de semana cuando recepción no está disponible.
+  - Tienen campañas en Instagram / Google Ads o buen posicionamiento local, pero la mayoría de los mensajes entran por la tarde/noche o fines de semana cuando recepción no está disponible.
   - El paciente escribe a varias clínicas simultáneamente; la primera que responde con empatía y claridad se queda con la cita.
   - Recepcionistas sobrecargadas respondiendo una y otra vez "¿cuánto sale la limpieza?" en lugar de atender a pacientes en sala.
 
@@ -50,7 +50,7 @@ Sin pagar bases de datos, con búsqueda manual de alta intención:
 >
 > Noté que cuando un paciente potencial les escribe por la tarde/noche o un domingo consultando por tratamientos de [Tratamiento: ej. ortodoncia invisible o estética], no disponen de respuesta inmediata ni agendamiento automático 24/7.  
 >
-> Desarrollamos **Atento**, un asistente con inteligencia artificial especializado para clínicas que responde en menos de 15 segundos por WhatsApp, orienta con sus precios autorizados y pre-reserva citas en su agenda sin cambiar su software actual.  
+> Desarrollamos **Atento**, un asistente con inteligencia artificial especializado para clínicas que responde 24/7 por WhatsApp, orienta con sus precios autorizados y pre-reserva citas en su agenda sin cambiar su software actual.  
 >
 > Les preparé una demo jugable interactiva de 1 minuto sin costo para que vean exactamente cómo atendería a sus pacientes:  
 > 👉 [Enlace a https://tudominio.com/demo]  
@@ -71,7 +71,7 @@ Sin pagar bases de datos, con búsqueda manual de alta intención:
 
 ### Opción C: Secuencia de Seguimiento (Follow-up al día 3 si no responden)
 
-> "Hola [Nombre]! Les comparto un dato rápido: el 64% de las personas que buscan clínica dental consultan fuera de horario comercial. Al responder en 10 segundos, la tasa de citas agendadas aumenta más del 30%.  
+> "Hola [Nombre]! Les comparto un dato rápido: muchas personas que buscan clínica dental consultan fuera de horario comercial. Una respuesta inmediata puede mejorar significativamente la tasa de citas agendadas.
 >
 > ¿Tienen 5 minutos esta semana para una llamada de demostración rápida? Si prefieren, les envío un video de 90 segundos mostrando el flujo."
 
@@ -118,9 +118,10 @@ Sin pagar bases de datos, con búsqueda manual de alta intención:
 
 ## 7. Métricas Clave y KPIs de Éxito
 
-- **Tiempo de primera respuesta (FRT):** Reducción de ~2 horas a < 15 segundos promedio 24/7.
-- **Tasa de conversión de contacto a cita:** Incremento objetivo del 25% al 35%.
-- **Recuperación de presupuestos fríos:** Reactivación de al menos un 12% de pacientes contactados vía follow-up a los 3 y 7 días.
+Objetivos por medir con clientes piloto:
+- **Tiempo de primera respuesta (FRT):** Mejora significativa vs. tiempo actual de respuesta manual.
+- **Tasa de conversión de contacto a cita:** Incremento objetivo a ser medido con datos reales.
+- **Recuperación de presupuestos fríos:** Reactivación de pacientes contactados vía follow-up a los 3 y 7 días.
 - **Tasa de asistencia (Reducción de No-Shows):** Reducción del ausentismo gracias a recordatorios automatizados 24 horas antes de la cita.
 
 ---
@@ -129,4 +130,4 @@ Sin pagar bases de datos, con búsqueda manual de alta intención:
 
 - **Consentimiento explícito:** El contacto comercial inicial debe ser siempre individualizado (outreach 1 a 1 enfocado en valor), nunca mediante envíos masivos o bases de datos compradas.
 - **Transparencia:** El asistente siempre se identifica como el asistente virtual oficial de la clínica.
-- **Privacidad de datos:** No se almacenan historiales clínicos sensibles en servidores no autorizados; los datos de contacto del paciente se procesan únicamente para la coordinación de la cita conforme al RGPD y normativas locales de protección de datos.
+- **Privacidad de datos:** No se almacenan historiales clínicos sensibles en servidores no autorizados; los datos de contacto del paciente se procesan únicamente para la coordinación de la cita conforme al RGPD y normativas locales de protección de datos. **Cumplimiento normativo (RGPD/HIPAA) sin verificar; no afirmamos certificaciones.**

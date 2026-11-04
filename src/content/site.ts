@@ -14,15 +14,15 @@ export const SITE = {
     { label: "Demo interactiva", href: "/demo" },
   ],
   stats: [
-    { value: "< 15 seg", label: "Tiempo promedio de respuesta 24/7" },
-    { value: "+35%", label: "Conversión de consultas a citas confirmadas" },
-    { value: "0 leads", label: "Pacientes perdidos fuera de horario" },
-    { value: "48-72 h", label: "Puesta en marcha con tu protocolo" },
+    { value: "24/7", label: "Respuesta continua" },
+    { value: "Agenda + follow-up", label: "WhatsApp + web" },
+    { value: "Guiada", label: "Puesta en marcha" },
+    { value: "48-72 h", label: "Con tu protocolo" },
   ],
   problem: {
-    title: "El 64% de las consultas a clínicas ocurren fuera del horario comercial",
+    title: "Cada mensaje sin respuesta es una cita que no llega",
     subtitle:
-      "Cuando un paciente potencial escribe por dolor o interés estético, espera respuesta inmediata. Si nadie contesta en 10 minutos, le escribe a la clínica de al lado.",
+      "Cuando un paciente potencial escribe por dolor o interés estético, espera respuesta inmediata. Si nadie contesta, la consulta se pierde.",
     points: [
       {
         title: "Respuestas tardías en WhatsApp",
@@ -36,16 +36,12 @@ export const SITE = {
         title: "Seguimiento manual inexistente",
         desc: "Muchos pacientes preguntan precio y no confirman. Sin follow-up estructurado, esos presupuestos nunca se cierran.",
       },
-      {
-        title: "Saturación del equipo humano",
-        desc: "Tu recepcionista repite 50 veces al día los mismos precios orientativos en lugar de cuidar la experiencia presencial.",
-      },
     ],
   },
   benefits: [
     {
       icon: "⚡",
-      title: "Responde en 10 segundos",
+      title: "Respuesta inmediata 24/7",
       desc: "Atención inmediata día, noche y festivos con tono cálido, empático y adaptado a odontología y medicina estética.",
     },
     {
@@ -145,32 +141,7 @@ export const SITE = {
       cta: "Hablar de Plan Premium",
     },
   ],
-  testimonials: [
-    {
-      quote:
-        "Antes perdíamos hasta 10 pacientes cada fin de semana. Desde el primer mes con Atento agendamos 28 valoraciones fuera de horario.",
-      author: "Dra. Valeria Méndez",
-      role: "Directora Médica · Odontología Integral",
-      city: "Madrid",
-      tag: "Ejemplo ficticio de demo",
-    },
-    {
-      quote:
-        "El seguimiento automático de presupuestos de ortodoncia recuperó a pacientes que dábamos por perdidos. La inversión se pagó sola en 15 días.",
-      author: "Dr. Carlos Santoro",
-      role: "Socio Fundador · Centro Sonrisas",
-      city: "Santiago",
-      tag: "Ejemplo ficticio de demo",
-    },
-    {
-      quote:
-        "Las pacientes de estética consultan mucho de noche sobre botox y ácido hialurónico. El asistente responde cálido y filtra las citas reales.",
-      author: "Dra. Sofía Alarcón",
-      role: "Especialista en Medicina Estética",
-      city: "Bogotá",
-      tag: "Ejemplo ficticio de demo",
-    },
-  ],
+  legalNote: "Cumplimiento normativo (RGPD/HIPAA) sin verificar; no afirmamos certificaciones.",
   founders: {
     totalSpots: 3,
     spotsTaken: 0,

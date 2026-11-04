@@ -33,7 +33,7 @@ export function FoundersOffer() {
             <span>Quedan {spotsLeft} de {founders.totalSpots} cupos</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
             {founders.title}
           </h2>
 
@@ -83,9 +83,9 @@ export function FoundersOffer() {
           {founders.options.map((opt, idx) => (
             <div
               key={idx}
-              className="relative flex flex-col justify-between rounded-3xl bg-slate-900/90 border-2 border-teal-500/40 p-7 sm:p-8 shadow-2xl shadow-teal-950/50 backdrop-blur-sm transition-all hover:border-teal-400/70"
+              className="relative flex flex-col justify-between rounded-2xl bg-slate-900/90 border-2 border-teal-500/40 p-7 sm:p-8 shadow-2xl shadow-teal-950/50 backdrop-blur-sm transition-all hover:border-teal-400/70"
             >
-              <div className="absolute -top-3.5 right-6 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-slate-950 shadow-sm">
+              <div className="absolute -top-3.5 right-6 rounded-full bg-gradient-to-r from-teal-700 to-indigo-700 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-slate-950 shadow-sm">
                 {opt.trialText}
               </div>
 
@@ -127,7 +127,7 @@ export function FoundersOffer() {
         </div>
 
         {/* Conditions & In Exchange Box */}
-        <div className="mt-12 max-w-4xl mx-auto rounded-3xl bg-slate-900/60 border border-slate-800 p-6 sm:p-8">
+        <div className="mt-12 max-w-4xl mx-auto rounded-2xl bg-slate-900/60 border border-slate-800 p-6 sm:p-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-5">
             <div>
               <h4 className="text-lg font-bold text-white flex items-center gap-2">
@@ -167,7 +167,7 @@ export function FoundersOffer() {
             href={founders.ctaHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-4 text-base font-bold text-slate-950 shadow-xl shadow-emerald-500/20 transition-all hover:from-emerald-400 hover:to-teal-400 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-teal-700 to-indigo-700 px-8 py-4 text-base font-bold text-slate-950 shadow-xl shadow-teal-600/20 transition-all hover:from-teal-800 hover:to-indigo-800 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
           >
             <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
               <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.96.525 1.761.809 2.796.809 3.182 0 5.768-2.587 5.769-5.766.001-3.182-2.585-5.796-5.769-5.796zm0 13.084c-1.109 0-2.193-.298-3.14-.863l-3.491.916.932-3.404c-.619-1.026-.946-2.197-.945-3.399.002-3.96 3.224-7.182 7.184-7.182 3.96 0 7.182 3.222 7.182 7.182 0 3.96-3.222 7.182-7.182 7.182z" />

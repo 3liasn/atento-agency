@@ -7,12 +7,12 @@ Atento es una solución de recepción con inteligencia artificial para clínicas
 ## 🚀 Características Principales
 
 - **Landing Page moderna y responsive (`/`):**
-  - **Hero:** Propuesta de valor clara, métricas de impacto y accesos directos a demo y WhatsApp.
-  - **Problema:** Explicación objetiva de la fuga de pacientes fuera de horario comercial con calculadora de retorno.
-  - **Oferta y Beneficios:** Respuesta en 10s, agendamiento 24/7, follow-up automático, lenguaje clínico natural y handoff humano.
-  - **Cómo Funciona:** Proceso de 3 pasos (Diagnóstico → Setup 48-72h → Live con métricas).
+  - **Hero:** Propuesta de valor clara, imagen principal con foto profesional y accesos directos a demo y WhatsApp.
+  - **Problema:** Explicación objetiva de la fuga de pacientes fuera de horario comercial con beneficios cualitativos.
+  - **Oferta y Beneficios:** Respuesta inmediata 24/7, agendamiento guiado, follow-up automático, lenguaje clínico natural y handoff humano.
+  - **Cómo Funciona:** Proceso de 3 pasos (Diagnóstico → Setup 48-72h → Live con soporte).
   - **Precios Transparentes:** 3 tiers en USD (Esencial $490+$149/mes, Crecimiento $990+$299/mes destacado, Premium $1990+$499/mes).
-  - **Prueba Social:** Testimonios identificados como ejemplos de demo.
+  - **Casos piloto:** Sección de "Casos piloto en preparación" con CTA a los 3 cupos fundadores.
   - **FAQ:** Preguntas frecuentes en acordeón nativo accesible.
   - **Contacto:** Formulario validado client-side y botón directo de WhatsApp.
   - **Footer:** Aviso reglamentario de proyecto piloto / demo.
