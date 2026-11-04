@@ -11,7 +11,7 @@ export function FoundersOffer() {
   return (
     <section
       id="fundadores"
-      className="scroll-mt-24 relative overflow-hidden py-20 md:py-28 bg-surface-raised border-y border-border"
+      className="scroll-mt-24 relative overflow-hidden py-16 md:py-24 bg-surface-raised border-y border-border"
     >
       <div
         aria-hidden

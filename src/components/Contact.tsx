@@ -21,16 +21,16 @@ export function Contact() {
     "w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-subtle focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20";
 
   return (
-    <section id="contacto" className="scroll-mt-24 py-20 md:py-28 bg-surface border-t border-border">
+    <section id="contacto" className="scroll-mt-24 py-16 md:py-24 bg-surface border-t border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-5">
             <p className="eyebrow mb-4">Paso siguiente</p>
             <h2 className="font-serif text-3xl sm:text-4xl font-medium tracking-tight text-foreground leading-tight">
-              Lleva la recepción de tu clínica al siguiente nivel
+              Prueba Atento en tu clínica con una demo real
             </h2>
             <p className="mt-4 text-base text-muted leading-relaxed">
-              Prueba un prototipo adaptado a los servicios de tu clínica dental o centro estético en menos de 48 horas.
+              Agenda una demo con el protocolo de tu clínica dental o de estética. 14 días de prueba, sin permanencia obligatoria.
             </p>
 
             <div className="mt-8 space-y-4">

@@ -3,7 +3,7 @@ import { SITE } from "@/content/site";
 
 export function Faq() {
   return (
-    <section id="faq" className="scroll-mt-24 py-20 md:py-28 bg-background border-t border-border">
+    <section id="faq" className="scroll-mt-24 py-16 md:py-24 bg-background border-t border-border">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <p className="eyebrow mb-4">Dudas</p>

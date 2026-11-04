@@ -6,12 +6,12 @@ export const SITE = {
   whatsappNumber: "886979516713",
   whatsappUrl: "https://wa.me/886979516713?text=Hola%20Atento%2C%20quiero%20informaci%C3%B3n%20para%20mi%20cl%C3%ADnica",
   navLinks: [
-    { label: "Oferta fundadores", href: "#fundadores" },
-    { label: "Qué ofrecemos", href: "#oferta" },
     { label: "Cómo funciona", href: "#como-funciona" },
+    { label: "Para clínicas", href: "#oferta" },
     { label: "Precios", href: "#precios" },
-    { label: "FAQ", href: "#faq" },
-    { label: "Demo interactiva", href: "/demo" },
+    { label: "Fundadores", href: "#fundadores" },
+    { label: "Demo", href: "/demo" },
+    { label: "Contacto", href: "#contacto" },
   ],
   stats: [
     { value: "24/7", label: "Respuesta continua" },
@@ -85,6 +85,11 @@ export const SITE = {
       step: "03",
       title: "Puesta en marcha y optimización",
       desc: "Tu clínica empieza a captar citas automáticamente con métricas de conversión semanales y soporte continuo.",
+    },
+    {
+      step: "04",
+      title: "Prueba de 14 días",
+      desc: "Validas el tono, el triaje y la agenda con pacientes reales. Sin permanencia obligatoria si no encaja.",
     },
   ],
   pricingTiers: [
@@ -236,6 +241,14 @@ export const SITE = {
         desc: "Puedes pedir la eliminación de tus datos de contacto y demos escribiendo por WhatsApp. Los plazos legales se confirmarán en la política publicada.",
       },
     ],
-    founder: null as null | { name: string; role: string; note: string },
+    founder: {
+      name: "Silvio",
+      role: "Fundador",
+      note:
+        "Atento nace para clínicas dentales y de estética que quieren recepción seria por WhatsApp sin improvisar. Espacio reservado para bio y foto reales; sin inventar trayectoria ni clientes.",
+      // Foto real pendiente: colocar archivo en /public/founder.jpg y poner photoSrc: "/founder.jpg"
+      photoSrc: null as string | null,
+    },
+    audienceNote: "Para clínicas dentales y de estética premium · Madrid y EE. UU.",
   },
 };

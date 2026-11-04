@@ -2,7 +2,7 @@ import React from "react";
 
 export function AgentMockup() {
   return (
-    <section className="py-20 md:py-28 bg-surface border-t border-border">
+    <section className="py-16 md:py-24 bg-surface border-t border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           <div className="lg:col-span-6 text-center lg:text-left">

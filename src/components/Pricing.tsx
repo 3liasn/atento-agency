@@ -4,7 +4,7 @@ import { SITE } from "@/content/site";
 
 export function Pricing() {
   return (
-    <section id="precios" className="scroll-mt-24 py-20 md:py-28 bg-surface border-t border-border">
+    <section id="precios" className="scroll-mt-24 py-16 md:py-24 bg-surface border-t border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <p className="eyebrow mb-4">Planes</p>

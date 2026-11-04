@@ -3,7 +3,7 @@ import { SITE } from "@/content/site";
 
 export function Benefits() {
   return (
-    <section id="oferta" className="scroll-mt-24 py-20 md:py-28 bg-surface">
+    <section id="oferta" className="scroll-mt-24 py-16 md:py-24 bg-surface">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <p className="eyebrow mb-4">Propuesta</p>
@@ -16,15 +16,10 @@ export function Benefits() {
           </p>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border rounded-xl overflow-hidden border border-border">
           {SITE.benefits.map((benefit, i) => (
-            <div
-              key={i}
-              className="flex flex-col rounded-xl border border-border bg-surface-raised p-7 transition-colors hover:border-accent/35"
-            >
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-accent/30 bg-accent-muted text-accent text-xs font-semibold mb-5">
-                {benefit.icon}
-              </div>
+            <div key={i} className="flex flex-col bg-surface-raised p-7 sm:p-8">
+              <span className="font-serif text-accent text-sm tracking-wide mb-4">{benefit.icon}</span>
               <h3 className="text-lg font-semibold text-foreground">{benefit.title}</h3>
               <p className="mt-2.5 text-sm leading-relaxed text-muted">{benefit.desc}</p>
             </div>
