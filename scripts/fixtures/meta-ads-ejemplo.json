@@ -1,0 +1,32 @@
+{
+  "_fixture": true,
+  "_aviso": "FIXTURE: datos de ejemplo ficticios, no reales. Se usa cuando no hay lectura en vivo disponible.",
+  "query_ejemplo": "clinica estetica madrid",
+  "country": "ES",
+  "anuncios": [
+    {
+      "anunciante": "Centro Estético Velázquez (Ficticio)",
+      "texto": "Valoración facial personalizada en Madrid. Reserva tu diagnóstico para armonización con ácido hialurónico y toxina botulínica.",
+      "cta": "Enviar mensaje por WhatsApp",
+      "fechaInicio": "2026-10-15"
+    },
+    {
+      "anunciante": "Centro Estético Velázquez (Ficticio)",
+      "texto": "Promoción de otoño en limpieza facial profunda con punta de diamante. Agenda tu cita por WhatsApp.",
+      "cta": "Enviar mensaje por WhatsApp",
+      "fechaInicio": "2026-10-22"
+    },
+    {
+      "anunciante": "Clínica DermaLuz Madrid (Ficticio)",
+      "texto": "Rejuvenecimiento láser y peeling médico con especialistas colegiados. Primera consulta informativa.",
+      "cta": "Más información",
+      "fechaInicio": "2026-10-18"
+    },
+    {
+      "anunciante": "Instituto Sonrisa & Estética Norte (Ficticio)",
+      "texto": "Diseño de sonrisa con carillas estéticas y blanqueamiento LED en 1 sesión. Financiación disponible.",
+      "cta": "Reservar ahora",
+      "fechaInicio": "2026-10-28"
+    }
+  ]
+}
